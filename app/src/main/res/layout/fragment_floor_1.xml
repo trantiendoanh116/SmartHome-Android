@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32sp"
-                android:text="ON"
+                android:text="Bật"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_light"
@@ -54,7 +54,7 @@
                 android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:background="#ffdfe2ea"
-                android:text="ON/OFF"
+                android:text="Bật/Tắt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32sp"
-                android:text="ON"
+                android:text="Bật"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_label_apt"
@@ -98,7 +98,7 @@
                 android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:background="#ffdfe2ea"
-                android:text="ON/OFF"
+                android:text="Bật/Tắt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -142,18 +142,18 @@
                 android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:background="#ffdfe2ea"
-                android:text="OFF"
+                android:text="Tắt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/button_on"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button_on"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:background="#ffdfe2ea"
-                android:text="on"
+                android:text="Bật/Tốc độ"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
