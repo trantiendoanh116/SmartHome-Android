@@ -1,5 +1,9 @@
 package com.iot.smarthome.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,14 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
+import com.iot.smarthome.utils.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +30,7 @@ import org.json.JSONObject;
 public class Floor1Fragment extends Fragment {
     private final String TAG = "Floor1Fragment";
     private TextView textLightStatus, textFanStatus, textAptStatus, textTemp, textHumi, textCo2;
+    private TextView mTextWaring;
     private Button btnFanOn, btnFanOff, btnChangLight, btnChangeApt;
     private Socket mSocket;
 
@@ -41,22 +49,17 @@ public class Floor1Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSocket.on(AppConfig.EVENT_RECEIVE_DATA, onNewData);
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("init", true);
-            mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         //staus
         initViews();
         setOnListener();
+        setOnListenerSocket();
 
     }
 
 
     private void initViews() {
-
+        mTextWaring = getView().findViewById(R.id.text_warning);
+        //
         btnChangLight = getView().findViewById(R.id.btn_change_light);
         textLightStatus = getView().findViewById(R.id.text_light_status);
 
@@ -136,25 +139,76 @@ public class Floor1Fragment extends Fragment {
 
     }
 
-    private Emitter.Listener onNewData = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
+    private void setOnListenerSocket() {
 
-                        JSONObject data = (JSONObject) args[0];
-                        Log.d(TAG, "" + data.toString());
-                        processData(data);
+        if (mSocket.connected()) {
+            mTextWaring.setVisibility(View.GONE);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        } else {
+            mTextWaring.setVisibility(View.VISIBLE);
+
+        }
+        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+
+            @Override
+            public void call(Object... args) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Connected to socket server", Toast.LENGTH_LONG).show();
+                            mTextWaring.setVisibility(View.GONE);
+
+                        }
+                    });
+                }
+
+            }
+
+        });
+        mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+
+            @Override
+            public void call(Object... args) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Disconnected to socket server", Toast.LENGTH_LONG).show();
+                            mTextWaring.setVisibility(View.VISIBLE);
+                        }
+                    });
 
 
                 }
-            });
+            }
+
+        });
+
+    }
+
+    private Emitter.Listener onNewData = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+
+                            JSONObject data = (JSONObject) args[0];
+                            Log.d(TAG, "" + data.toString());
+                            processData(data);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+            }
+
         }
     };
 
@@ -198,5 +252,6 @@ public class Floor1Fragment extends Fragment {
         }
 
     }
+
 
 }

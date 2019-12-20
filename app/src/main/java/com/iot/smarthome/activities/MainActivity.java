@@ -1,5 +1,8 @@
 package com.iot.smarthome.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     private FirebaseAuth auth;
     private Socket mSocket;
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,48 +80,35 @@ public class MainActivity extends AppCompatActivity {
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        }
-        setContentView(R.layout.activity_main);
-        try {
-            mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.NAMESPACE_GET_DATA);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            Log.d("ERROR :", e.toString());
-        }
-        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {
-                Log.d(TAG, "Connected to socket server");
+        } else {
+            setContentView(R.layout.activity_main);
+            try {
+                mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.NAMESPACE_GET_DATA);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                Log.d("ERROR :", e.toString());
             }
+            mSocket.connect();
 
-        });
-        mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-            @Override
-            public void call(Object... args) {
-                Log.d(TAG, "Disconnected to socket server");
+            if (savedInstanceState == null) {
+                Floor1Fragment fragment = new Floor1Fragment(mSocket);
+                FragmentManager mFragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.container, fragment);
+                fragmentTransaction.commit();
             }
-
-        });
-
-        mSocket.connect();
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        if (savedInstanceState == null) {
-            Floor1Fragment fragment = new Floor1Fragment(mSocket);
-            FragmentManager mFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.container, fragment);
-            fragmentTransaction.commit();
         }
+
     }
 
     @Override
     protected void onDestroy() {
+        //mSocket.disconnect();
         super.onDestroy();
-        mSocket.disconnect();
+
     }
 
     private void activeFragment(Fragment fragment) {
