@@ -1,9 +1,5 @@
 package com.iot.smarthome.fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,17 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
-import com.iot.smarthome.utils.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,9 +22,9 @@ import org.json.JSONObject;
 
 public class Floor1Fragment extends Fragment {
     private final String TAG = "Floor1Fragment";
-    private TextView textLightStatus, textFanStatus, textAptStatus, textTemp, textHumi, textCo2;
+    private TextView textLightStatus, textLightStatus1, textFanStatus, textAptStatus, textTemp, textHumi, textCo2;
     private TextView mTextWaring;
-    private Button btnFanOn, btnFanOff, btnChangLight, btnChangeApt;
+    private Button btnFanOn, btnFanOff, btnChangLight, btnChangLight1, btnChangeApt;
     private Socket mSocket;
 
     public Floor1Fragment(Socket socket) {
@@ -41,8 +34,7 @@ public class Floor1Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_floor_1, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_floor_1, container, false);
     }
 
     @Override
@@ -63,6 +55,9 @@ public class Floor1Fragment extends Fragment {
         btnChangLight = getView().findViewById(R.id.btn_change_light);
         textLightStatus = getView().findViewById(R.id.text_light_status);
 
+        btnChangLight1 = getView().findViewById(R.id.btn_change_light_1);
+        textLightStatus1 = getView().findViewById(R.id.text_light_status_1);
+
         btnChangeApt = getView().findViewById(R.id.btn_change_fan);
         textAptStatus = getView().findViewById(R.id.text_apt_status);
 
@@ -81,10 +76,24 @@ public class Floor1Fragment extends Fragment {
         btnChangLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Change light");
+                Log.d(TAG, "Change living room light");
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("light", true);
+                    mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        btnChangLight1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Change decorative light");
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("light_1", true);
                     mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -156,7 +165,7 @@ public class Floor1Fragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "Connected to socket server", Toast.LENGTH_LONG).show();
+                            Log.d(TAG, "Connected to socket server");
                             mTextWaring.setVisibility(View.GONE);
 
                         }
@@ -174,7 +183,7 @@ public class Floor1Fragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "Disconnected to socket server", Toast.LENGTH_LONG).show();
+                            Log.d(TAG, "Disconnected to socket server");
                             mTextWaring.setVisibility(View.VISIBLE);
                         }
                     });
@@ -220,6 +229,14 @@ public class Floor1Fragment extends Fragment {
                     textLightStatus.setText("Bật");
                 } else {
                     textLightStatus.setText("Tắt");
+                }
+            }
+            if (data.has("light_1")) {
+                int value = data.getInt("light_1");
+                if (value == 1) {
+                    textLightStatus1.setText("Bật");
+                } else {
+                    textLightStatus1.setText("Tắt");
                 }
             }
             if (data.has("fan")) {

@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.fragment_settings);
+        setContentView(R.layout.activity_settings);
         mLayoutSignOut = findViewById(R.id.layout_sign_out);
 
         mLayoutSignOut.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
                     signOut();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                    builder.setMessage("Không có kết nối mạng.");
+                    builder.setMessage(getString(R.string.all_msg_warning_network));
                     builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -66,8 +66,8 @@ public class SettingsActivity extends AppCompatActivity {
     private void signOut() {
         if (mAuth.getCurrentUser() != null) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Bạn có chắc chắn muốn đăng xuất");
-            alert.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+            alert.setMessage(getString(R.string.settings_msg_confirm_logout));
+            alert.setPositiveButton(getString(R.string.settings_lbl_logout), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     AuthUI.getInstance().signOut(SettingsActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
                     });
                 }
             });
-            alert.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+            alert.setNegativeButton(getString(R.string.all_txt_cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
             alert.show();
         } else {
             final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Đã xảy ra lỗi, thử lại sau !!!");
+            alert.setMessage(getString(R.string.all_msg_error));
             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

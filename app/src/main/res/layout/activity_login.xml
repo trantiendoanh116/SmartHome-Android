@@ -39,7 +39,7 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tài khoản"
+                android:hint="@string/login_edit_hint_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:hint="Mật khẩu"
+                android:hint="@string/login_edit_hint_password"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@color/colorPrimary"
-            android:text="Đăng nhập"
+            android:text="@string/login_btn_login"
 
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />

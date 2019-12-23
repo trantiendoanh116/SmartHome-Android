@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="app_language">English</string>
+    <!--<string name="navigation_drawer_open">Open navigation drawer</string>-->
+    <!--<string name="navigation_drawer_close">Close navigation drawer</string>-->
+    <!--<string name="nav_header_title">Android Studio</string>-->
+    <!--<string name="nav_header_subtitle">android.studio@android.com</string>-->
+    <!--<string name="nav_header_desc">Navigation header</string>-->
+    <!--<string name="action_settings">Settings</string>-->
+    <!--<string name="title_activity_main">MainActivity</string>-->
+    <string name="all_msg_warning_network">No internet connection</string>
+    <string name="all_msg_error">An unknown error occurred.</string>
+    <string name="all_txt_cancel">Cancel</string>
+
+    <string name="main_txt_floor_1">Floor 1</string>
+    <string name="main_txt_floor_2">Floor 2</string>
+    <string name="main_txt_floor_3">Floor 2</string>
+    <string name="main_msg_connect_server_warning">No connection to server</string>
+
+    <string name="login_edit_hint_email">Username</string>
+    <string name="login_edit_hint_password">Password</string>
+    <string name="login_btn_login">Login</string>
+    <string name="login_msg_login_warning">Username or password wrong.</string>
+    <string name="login_msg_email_warning">Username is empty</string>
+    <string name="login_msg_password_warning">Password is empty</string>
+
+    <string name="settings_toolbar_title">Settings</string>
+    <string name="settings_lbl_gerenal">General</string>
+    <string name="settings_lbl_language">Language</string>
+    <string name="settings_lbl_logout">Logout</string>
+    <string name="settings_msg_confirm_logout">Are you sure you want to sign out?</string>
+
+
+</resources>

@@ -1,31 +1,24 @@
 package com.iot.smarthome.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
-import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
-import com.iot.smarthome.fragments.Floor1Fragment;
-import com.iot.smarthome.fragments.Floor2Fragment;
-import com.iot.smarthome.fragments.Floor3Fragment;
+import com.iot.smarthome.adapters.MyAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -33,45 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     private FirebaseAuth auth;
     private Socket mSocket;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Toolbar mToolbar;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Handler handler = new Handler();
-            switch (item.getItemId()) {
-                case R.id.nav_floor_1:
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            activeFragment(new Floor1Fragment(mSocket));
-                        }
-                    }, 200);
-
-                    return true;
-                case R.id.nav_floor_2:
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            activeFragment(new Floor2Fragment());
-                        }
-                    }, 200);
-
-                    return true;
-                case R.id.nav_floor_3:
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            activeFragment(new Floor3Fragment());
-                        }
-                    }, 200);
-
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             setContentView(R.layout.activity_main);
+            mToolbar = findViewById(R.id.toolbar);
+            mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return false;
+                }
+            });
             try {
                 mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.NAMESPACE_GET_DATA);
             } catch (URISyntaxException e) {
@@ -89,36 +57,45 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ERROR :", e.toString());
             }
             mSocket.connect();
+            tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+            viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.main_txt_floor_1)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.main_txt_floor_2)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.main_txt_floor_3)));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-            if (savedInstanceState == null) {
-                Floor1Fragment fragment = new Floor1Fragment(mSocket);
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.container, fragment);
-                fragmentTransaction.commit();
+            final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), mSocket);
+            viewPager.setAdapter(adapter);
+
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("init", true);
+                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+                Log.d(TAG, "Load first data");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
-
     }
-
-    @Override
-    protected void onDestroy() {
-        //mSocket.disconnect();
-        super.onDestroy();
-
-    }
-
-    private void activeFragment(Fragment fragment) {
-        FragmentManager mFragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
-
-
 }

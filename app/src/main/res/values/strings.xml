@@ -1,11 +1,26 @@
 <resources>
     <string name="app_name">SmartHome</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_language">Tiếng Việt</string>
+    <string name="all_msg_warning_network">Không có kết nối mạng</string>
+    <string name="all_msg_error">Đã xảy ra lỗi.</string>
+    <string name="all_txt_cancel">Huỷ</string>
+
+    <string name="main_txt_floor_1">Tầng 1</string>
+    <string name="main_txt_floor_2">Tầng 2</string>
+    <string name="main_txt_floor_3">Tầng 3</string>
+    <string name="main_msg_connect_server_warning">Không có kết nối với máy chủ</string>
+
+    <string name="login_edit_hint_email">Tài khoản</string>
+    <string name="login_edit_hint_password">Mật khẩu</string>
+    <string name="login_btn_login">Đăng nhập</string>
+    <string name="login_msg_login_warning">Tên đăng nhập hoặc mật khẩu sai.</string>
+    <string name="login_msg_email_warning">Tên tài khoản trống</string>
+    <string name="login_msg_password_warning">Mật khẩu trống</string>
+
+    <string name="settings_toolbar_title">Cài đặt</string>
+    <string name="settings_lbl_gerenal">Cài đặt chung</string>
+    <string name="settings_lbl_language">Ngôn ngữ</string>
+    <string name="settings_lbl_logout">Đăng xuất</string>
+    <string name="settings_msg_confirm_logout">Bạn chắc chắn muốn đăng xuất?</string>
 
 </resources>

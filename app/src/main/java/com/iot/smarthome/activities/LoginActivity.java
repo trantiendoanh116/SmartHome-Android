@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +21,6 @@ import com.iot.smarthome.R;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
-    private Button btnSignIn;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -37,11 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_login);
 
-        btnSignIn = (Button) findViewById(R.id.sign_up_button);
+        Button btnSignIn = findViewById(R.id.sign_up_button);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
 
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +49,12 @@ public class LoginActivity extends AppCompatActivity {
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    showDialogWarning(getString(R.string.login_msg_email_warning));
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    showDialogWarning(getString(R.string.login_msg_password_warning));
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -71,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                                 // signed in user can be handled in the listener.
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    showDialogLoginFailed();
+                                    showDialogWarning(getString(R.string.login_msg_login_warning));
                                 } else {
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -84,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showDialogLoginFailed() {
+    private void showDialogWarning(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Tên đăng nhập hoặc mật khẩu sai !!!");
+        builder.setMessage(msg);
         builder.setCancelable(true);
         builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

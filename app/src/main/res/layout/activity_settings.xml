@@ -13,7 +13,7 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_white"
-        app:title="Cài đặt"
+        app:title="@string/settings_toolbar_title"
         app:titleTextColor="@color/colorWhite" />
 
     <ScrollView
@@ -32,10 +32,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="13dp"
+                android:paddingLeft="13dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="Chung"
+                android:text="@string/settings_lbl_gerenal"
                 android:textColor="#727272"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -69,7 +69,7 @@
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="13dp"
                             android:layout_marginBottom="13dp"
-                            android:text="Ngôn ngữ"
+                            android:text="@string/settings_lbl_language"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,7 +82,7 @@
                             android:layout_marginTop="13dp"
                             android:layout_marginEnd="13dp"
                             android:layout_marginBottom="13dp"
-                            android:text="Tiếng Việt"
+                            android:text="@string/app_language"
                             android:textColor="@color/colorAccent"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +105,7 @@
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="13dp"
                             android:layout_marginBottom="13dp"
-                            android:text="Đăng xuất"
+                            android:text="@string/settings_lbl_logout"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
