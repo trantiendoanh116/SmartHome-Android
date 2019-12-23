@@ -12,11 +12,22 @@
     <string name="all_msg_warning_network">No internet connection</string>
     <string name="all_msg_error">An unknown error occurred.</string>
     <string name="all_txt_cancel">Cancel</string>
+    <string name="all_txt_on">On</string>
+    <string name="all_txt_off">Off</string>
+    <string name="all_txt_speed">Speed</string>
 
     <string name="main_txt_floor_1">Floor 1</string>
     <string name="main_txt_floor_2">Floor 2</string>
     <string name="main_txt_floor_3">Floor 2</string>
     <string name="main_msg_connect_server_warning">No connection to server</string>
+
+    <string name="floor_1_lbl_living_room_light">Living room light</string>
+    <string name="floor_1_lbl_decorative_light">Decorative light</string>
+    <string name="floor_1_lbl_ceiling_fan">Ceiling Fan</string>
+    <string name="floor_1_lbl_aptomat">Aptomat</string>
+    <string name="floor_1_lbl_temp_humi">Temperature and humidity</string>
+    <string name="floor_1_lbl_co2">CO2</string>
+
 
     <string name="login_edit_hint_email">Username</string>
     <string name="login_edit_hint_password">Password</string>

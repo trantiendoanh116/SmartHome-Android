@@ -4,11 +4,21 @@
     <string name="all_msg_warning_network">Không có kết nối mạng</string>
     <string name="all_msg_error">Đã xảy ra lỗi.</string>
     <string name="all_txt_cancel">Huỷ</string>
+    <string name="all_txt_on">Bật</string>
+    <string name="all_txt_off">Tắt</string>
+    <string name="all_txt_speed">Tốc độ</string>
 
     <string name="main_txt_floor_1">Tầng 1</string>
     <string name="main_txt_floor_2">Tầng 2</string>
     <string name="main_txt_floor_3">Tầng 3</string>
     <string name="main_msg_connect_server_warning">Không có kết nối với máy chủ</string>
+
+    <string name="floor_1_lbl_living_room_light">Đèn phòng khách</string>
+    <string name="floor_1_lbl_decorative_light">Đèn trang trí</string>
+    <string name="floor_1_lbl_ceiling_fan">Quạt trần</string>
+    <string name="floor_1_lbl_aptomat">Aptomat</string>
+    <string name="floor_1_lbl_temp_humi">Nhiệt độ và Độ ẩm</string>
+    <string name="floor_1_lbl_co2">CO2</string>
 
     <string name="login_edit_hint_email">Tài khoản</string>
     <string name="login_edit_hint_password">Mật khẩu</string>

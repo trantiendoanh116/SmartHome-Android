@@ -226,29 +226,29 @@ public class Floor1Fragment extends Fragment {
             if (data.has("light")) {
                 int value = data.getInt("light");
                 if (value == 1) {
-                    textLightStatus.setText("Bật");
+                    textLightStatus.setText(getString(R.string.all_txt_on));
                 } else {
-                    textLightStatus.setText("Tắt");
+                    textLightStatus.setText(getString(R.string.all_txt_off));
                 }
             }
             if (data.has("light_1")) {
                 int value = data.getInt("light_1");
                 if (value == 1) {
-                    textLightStatus1.setText("Bật");
+                    textLightStatus1.setText(getString(R.string.all_txt_on));
                 } else {
-                    textLightStatus1.setText("Tắt");
+                    textLightStatus1.setText(getString(R.string.all_txt_off));
                 }
             }
             if (data.has("fan")) {
                 int value = data.getInt("fan");
-                textFanStatus.setText("Tốc độ:" + value);
+                textFanStatus.setText(getString(R.string.all_txt_speed) + ": " + value);
             }
             if (data.has("apt")) {
                 int value = data.getInt("apt");
                 if (value == 1) {
-                    textAptStatus.setText("Bật");
+                    textAptStatus.setText(getString(R.string.all_txt_on));
                 } else {
-                    textAptStatus.setText("Tắt");
+                    textAptStatus.setText(getString(R.string.all_txt_off));
                 }
             }
             if (data.has("temp")) {
@@ -261,7 +261,7 @@ public class Floor1Fragment extends Fragment {
             }
             if (data.has("co")) {
                 double value = data.getInt("co");
-                textCo2.setText(value + "%");
+                textCo2.setText(String.valueOf(value));
             }
 
         } catch (Exception e) {
