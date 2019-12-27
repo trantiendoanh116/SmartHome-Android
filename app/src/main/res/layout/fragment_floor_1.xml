@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/all_txt_no_connect"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_change_light"
                 app:layout_constraintStart_toEndOf="@id/text_light"
@@ -90,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/all_txt_no_connect"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_change_light_1"
                 app:layout_constraintStart_toEndOf="@id/text_light_1"
@@ -133,10 +134,10 @@
                 android:id="@+id/text_fan_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:text="@string/all_txt_no_connect"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_off"
                 app:layout_constraintStart_toEndOf="@id/text_fan"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -189,10 +190,10 @@
                 android:id="@+id/text_apt_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32sp"
                 android:text="@string/all_txt_no_connect"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_change_fan"
                 app:layout_constraintStart_toEndOf="@id/text_label_apt"
                 app:layout_constraintTop_toTopOf="parent" />
 
