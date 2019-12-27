@@ -227,28 +227,39 @@ public class Floor1Fragment extends Fragment {
                 int value = data.getInt("light");
                 if (value == 1) {
                     textLightStatus.setText(getString(R.string.all_txt_on));
-                } else {
+                } else if (value == 0) {
                     textLightStatus.setText(getString(R.string.all_txt_off));
+                } else {
+                    textLightStatus.setText(getString(R.string.all_txt_error));
                 }
             }
             if (data.has("light_1")) {
                 int value = data.getInt("light_1");
                 if (value == 1) {
                     textLightStatus1.setText(getString(R.string.all_txt_on));
-                } else {
+                } else if (value == 0) {
                     textLightStatus1.setText(getString(R.string.all_txt_off));
+                } else {
+                    textLightStatus1.setText(getString(R.string.all_txt_error));
                 }
             }
             if (data.has("fan")) {
                 int value = data.getInt("fan");
-                textFanStatus.setText(getString(R.string.all_txt_speed) + ": " + value);
+                if (value == 0 || value == 1 || value == 2 || value == 3) {
+                    textFanStatus.setText(getString(R.string.all_txt_speed) + ": " + value);
+                } else {
+                    textFanStatus.setText(getString(R.string.all_txt_error));
+                }
+
             }
             if (data.has("apt")) {
                 int value = data.getInt("apt");
                 if (value == 1) {
                     textAptStatus.setText(getString(R.string.all_txt_on));
-                } else {
+                } else if (value == 0) {
                     textAptStatus.setText(getString(R.string.all_txt_off));
+                } else {
+                    textAptStatus.setText(getString(R.string.all_txt_error));
                 }
             }
             if (data.has("temp")) {
