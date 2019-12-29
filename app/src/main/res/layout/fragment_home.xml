@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_menu"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="Nhà thông minh"
+        app:titleTextColor="#FFFF" />
+
+
+    <TextView
+        android:id="@+id/text_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/main_msg_connect_server_warning"
+        android:textColor="@color/colorRed"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/cardview"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d01_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn trần KH1"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d01_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d01_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d01_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d01_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d02_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn chùm KH1"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d02_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d02_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d02_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d02_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d03_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn tranh KH1"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d03_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d03_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d03_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d03_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d04_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Quạt trần"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d04_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d04_btn_off"
+                    app:layout_constraintStart_toEndOf="@id/f1d04_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d04_btn_off"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d04_btn_on"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d04_btn_on"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d05_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn trang trí KH1"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d05_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d05_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d05_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d05_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d06_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn trần KH2"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d06_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d06_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d06_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d06_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d07_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn chùm KH2"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d07_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d07_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d07_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d07_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d08_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn tranh KH2"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d08_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d08_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d08_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d08_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d09_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn sân"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d09_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d09_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d09_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d09_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d10_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn cổng"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d10_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d10_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d10_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d10_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d11_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn WC"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d11_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d11_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d11_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d11_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d12_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Bình NL"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d12_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d12_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d12_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d12_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d13_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn của ngách"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d13_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d13_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d13_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d13_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d14_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn 1 bếp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d14_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d14_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d14_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d14_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d15_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Đèn 2 bếp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f1d15_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d15_btn"
+                    app:layout_constraintStart_toEndOf="@id/f1d15_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d15_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/f1d16_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Khí lọc"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/f116_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d16_btn_on"
+                    app:layout_constraintStart_toEndOf="@id/f1d16_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d16_btn_on"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cd01_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="AT bếp"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/cd01_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/cd01_btn"
+                    app:layout_constraintStart_toEndOf="@id/cd01_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/cd01_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cd02_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="AT tổng"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/cd02_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_loading"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/cd02_btn"
+                    app:layout_constraintStart_toEndOf="@id/cd02_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/cd02_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/home_lbl_pading_start"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Nhiệt độ và độ ẩm"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/cs01_temp_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="°C"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/cs01_humi_value"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/cs01_humi_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="%"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Khói bếp(CO)"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/cs02_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Dòng điện tổng"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/cs03_dd_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="A"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Công suất điện tiêu thụ"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/cs03_cs_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="W.KW.MW"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

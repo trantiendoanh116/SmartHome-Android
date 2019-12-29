@@ -34,5 +34,7 @@
     <string name="settings_lbl_language">Ngôn ngữ</string>
     <string name="settings_lbl_logout">Đăng xuất</string>
     <string name="settings_msg_confirm_logout">Bạn chắc chắn muốn đăng xuất?</string>
+    <string name="nav_header_title">Nhà thông minh</string>
+    <string name="all_loading">Loading</string>
 
 </resources>

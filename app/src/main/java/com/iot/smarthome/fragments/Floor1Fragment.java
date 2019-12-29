@@ -41,7 +41,6 @@ public class Floor1Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSocket.on(AppConfig.EVENT_RECEIVE_DATA, onNewData);
-        //staus
         initViews();
         setOnListener();
         setOnListenerSocket();

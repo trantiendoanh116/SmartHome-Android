@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.iot.smarthome.utils.NetworkUtil;
 
@@ -22,8 +21,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         } else if (conn == NetworkUtil.TYPE_NOT_CONNECTED) {
             status = "Not connected to Internet";
         }
-        Log.d("NetworkChangeReceiver",status);
-        Toast.makeText(context, status, Toast.LENGTH_LONG).show();
+        Log.d("NetworkChangeReceiver", status);
     }
 
 }
