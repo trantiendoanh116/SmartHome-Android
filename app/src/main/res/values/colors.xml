@@ -8,4 +8,6 @@
 
     <color name="colorWhite">#E9E6E6</color>
     <color name="colorRed">#f44f2a</color>
+    <color name="colorBtnClicked">#2e9850</color>
+    <color name="colorBtnNormal">#ffdfe2ea</color>
 </resources>

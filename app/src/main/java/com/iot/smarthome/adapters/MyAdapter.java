@@ -7,9 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.github.nkzawa.socketio.client.Socket;
-import com.iot.smarthome.fragments.Floor1Fragment;
-import com.iot.smarthome.fragments.Floor2Fragment;
-import com.iot.smarthome.fragments.Floor3Fragment;
 
 public class MyAdapter extends FragmentPagerAdapter {
     private Context myContext;
@@ -26,19 +23,20 @@ public class MyAdapter extends FragmentPagerAdapter {
     // this is for fragment tabs
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                Floor1Fragment floor1Fragment = new Floor1Fragment(mSocket);
-                return floor1Fragment;
-            case 1:
-                Floor2Fragment floor2Fragment = new Floor2Fragment();
-                return floor2Fragment;
-            case 2:
-                Floor3Fragment floor3Fragment = new Floor3Fragment();
-                return floor3Fragment;
-            default:
-                return null;
-        }
+//        switch (position) {
+//            case 0:
+//                Floor1Fragment floor1Fragment = new Floor1Fragment(mSocket);
+//                return floor1Fragment;
+//            case 1:
+//                Floor2Fragment floor2Fragment = new Floor2Fragment();
+//                return floor2Fragment;
+//            case 2:
+//                Floor3Fragment floor3Fragment = new Floor3Fragment();
+//                return floor3Fragment;
+//            default:
+//                return null;
+//        }
+        return null;
     }
 
     // this counts total number of tabs

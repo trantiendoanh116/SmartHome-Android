@@ -167,7 +167,7 @@
                     android:layout_height="@dimen/home_btn_height"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:background="#ffdfe2ea"
-                    android:text="@string/all_loading"
+                    android:text="ON/OFF"
                     android:textSize="@dimen/home_btn_txt_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
