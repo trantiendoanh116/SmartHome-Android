@@ -529,14 +529,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (jsonObject.has(AppConfig.quat_tran)) {
                 try {
                     int value = jsonObject.getInt(AppConfig.quat_tran);
-                    if (value == 0) {
-                        mTxtQuatTran.setText("0");
-                    } else if (value == 1) {
-                        mTxtQuatTran.setText("1");
-                    } else if (value == 2) {
-                        mTxtQuatTran.setText("2");
-                    } else if (value == 3) {
-                        mTxtQuatTran.setText("3");
+                    if (value == 0 || value == 1 || value == 2 || value == 3) {
+                        if (value == 0) {
+                            mTxtQuatTran.setText("Tắt");
+                        } else {
+                            mTxtQuatTran.setText("Tốc độ: " + value);
+                        }
                     } else {
                         mTxtQuatTran.setText(getString(R.string.all_txt_error));
                     }
@@ -725,10 +723,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (jsonObject.has(AppConfig.khi_loc)) {
                 try {
                     int value = jsonObject.getInt(AppConfig.khi_loc);
-                    if (value == 1) {
-                        mTxtKhiLoc.setText("1");
-                    } else if (value == 2) {
-                        mTxtKhiLoc.setText("2");
+                    if (value == 0 || value == 1 || value == 2) {
+                        if (value == 0) {
+                            mTxtKhiLoc.setText("Tắt");
+                        } else {
+                            mTxtKhiLoc.setText("Cấp " + value);
+                        }
                     } else {
                         mTxtKhiLoc.setText(getString(R.string.all_txt_error));
                     }
