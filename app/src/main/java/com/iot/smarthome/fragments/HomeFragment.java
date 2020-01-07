@@ -480,49 +480,53 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             //Den Tran KH1
             if (jsonObject.has(AppConfig.den_tran_kh1)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_tran_kh1);
-                    if (value == 0) {
-                        mTxtDenTranKh1.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_tran_kh1);
+                    if (isOn) {
                         mTxtDenTranKh1.setText(getString(R.string.all_txt_on));
+                        mTxtDenTranKh1.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenTranKh1.setText(getString(R.string.all_txt_error));
+                        mTxtDenTranKh1.setText(getString(R.string.all_txt_off));
+                        mTxtDenTranKh1.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenTranKh1.setText(getString(R.string.all_txt_error));
+                    mTxtDenTranKh1.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Chum KH1
             if (jsonObject.has(AppConfig.den_chum_kh1)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_chum_kh1);
-                    if (value == 0) {
-                        mTxtDenChumKh1.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_chum_kh1);
+                    if (isOn) {
                         mTxtDenChumKh1.setText(getString(R.string.all_txt_on));
+                        mTxtDenChumKh1.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenChumKh1.setText(getString(R.string.all_txt_error));
+                        mTxtDenChumKh1.setText(getString(R.string.all_txt_off));
+                        mTxtDenChumKh1.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenChumKh1.setText(getString(R.string.all_txt_error));
+                    mTxtDenChumKh1.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Tranh KH1
             if (jsonObject.has(AppConfig.den_tranh_kh1)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_tranh_kh1);
-                    if (value == 0) {
-                        mTxtDentranhKh1.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_tranh_kh1);
+                    if (isOn) {
                         mTxtDentranhKh1.setText(getString(R.string.all_txt_on));
+                        mTxtDentranhKh1.setTextColor(getResources().getColor(R.color.colorOn));
+
                     } else {
-                        mTxtDentranhKh1.setText(getString(R.string.all_txt_error));
+                        mTxtDentranhKh1.setText(getString(R.string.all_txt_off));
+                        mTxtDentranhKh1.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDentranhKh1.setText(getString(R.string.all_txt_error));
+                    mTxtDentranhKh1.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Quat Tran
@@ -532,11 +536,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     if (value == 0 || value == 1 || value == 2 || value == 3) {
                         if (value == 0) {
                             mTxtQuatTran.setText("Tắt");
+                            mTxtQuatTran.setTextColor(getResources().getColor(R.color.colorOff));
                         } else {
                             mTxtQuatTran.setText("Tốc độ: " + value);
+                            mTxtQuatTran.setTextColor(getResources().getColor(R.color.colorOn));
                         }
                     } else {
                         mTxtQuatTran.setText(getString(R.string.all_txt_error));
+                        mTxtQuatTran.setTextColor(getResources().getColor(R.color.colorError));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
@@ -546,177 +553,191 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             //Den Tranh tri KH1
             if (jsonObject.has(AppConfig.den_trangtri_kh1)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_trangtri_kh1);
-                    if (value == 0) {
-                        mTxtDenTrangTriKh1.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_trangtri_kh1);
+                    if (isOn) {
                         mTxtDenTrangTriKh1.setText(getString(R.string.all_txt_on));
+                        mTxtDenTrangTriKh1.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenTrangTriKh1.setText(getString(R.string.all_txt_error));
+                        mTxtDenTrangTriKh1.setText(getString(R.string.all_txt_off));
+                        mTxtDenTrangTriKh1.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenTrangTriKh1.setText(getString(R.string.all_txt_error));
+                    mTxtDenTrangTriKh1.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Tran KH2
             if (jsonObject.has(AppConfig.den_tran_kh2)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_tran_kh2);
-                    if (value == 0) {
-                        mTxtDenTranKh2.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_tran_kh2);
+                    if (isOn) {
                         mTxtDenTranKh2.setText(getString(R.string.all_txt_on));
+                        mTxtDenTranKh2.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenTranKh2.setText(getString(R.string.all_txt_error));
+                        mTxtDenTranKh2.setText(getString(R.string.all_txt_off));
+                        mTxtDenTranKh2.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenTranKh2.setText(getString(R.string.all_txt_error));
+                    mTxtDenTranKh2.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Chum KH2
             if (jsonObject.has(AppConfig.den_chum_kh2)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_chum_kh2);
-                    if (value == 0) {
-                        mTxtDenChumKh2.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_chum_kh2);
+                    if (isOn) {
                         mTxtDenChumKh2.setText(getString(R.string.all_txt_on));
+                        mTxtDenChumKh2.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenChumKh2.setText(getString(R.string.all_txt_error));
+                        mTxtDenChumKh2.setText(getString(R.string.all_txt_off));
+                        mTxtDenChumKh2.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenChumKh2.setText(getString(R.string.all_txt_error));
+                    mTxtDenChumKh2.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Tranh KH2
             if (jsonObject.has(AppConfig.den_tranh_kh2)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_tranh_kh2);
-                    if (value == 0) {
-                        mTxtDentranhKh2.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_tranh_kh2);
+                    if (isOn) {
                         mTxtDentranhKh2.setText(getString(R.string.all_txt_on));
+                        mTxtDentranhKh2.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDentranhKh2.setText(getString(R.string.all_txt_error));
+                        mTxtDentranhKh2.setText(getString(R.string.all_txt_off));
+                        mTxtDentranhKh2.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDentranhKh2.setText(getString(R.string.all_txt_error));
+                    mTxtDentranhKh2.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den San
             if (jsonObject.has(AppConfig.den_san)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_san);
-                    if (value == 0) {
-                        mTxtDenSan.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_san);
+                    if (isOn) {
                         mTxtDenSan.setText(getString(R.string.all_txt_on));
+                        mTxtDenSan.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenSan.setText(getString(R.string.all_txt_error));
+                        mTxtDenSan.setText(getString(R.string.all_txt_off));
+                        mTxtDenSan.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenSan.setText(getString(R.string.all_txt_error));
+                    mTxtDenSan.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Cong
             if (jsonObject.has(AppConfig.den_cong)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_cong);
-                    if (value == 0) {
-                        mTxtDenCong.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_cong);
+                    if (isOn) {
                         mTxtDenCong.setText(getString(R.string.all_txt_on));
+                        mTxtDenCong.setTextColor(getResources().getColor(R.color.colorOn));
+
                     } else {
-                        mTxtDenCong.setText(getString(R.string.all_txt_error));
+                        mTxtDenCong.setText(getString(R.string.all_txt_off));
+                        mTxtDenCong.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenCong.setText(getString(R.string.all_txt_error));
+                    mTxtDenCong.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den WC
             if (jsonObject.has(AppConfig.den_wc)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_wc);
-                    if (value == 0) {
-                        mTxtDenWC.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_wc);
+                    if (isOn) {
                         mTxtDenWC.setText(getString(R.string.all_txt_on));
+                        mTxtDenWC.setTextColor(getResources().getColor(R.color.colorOn));
+
                     } else {
-                        mTxtDenWC.setText(getString(R.string.all_txt_error));
+                        mTxtDenWC.setText(getString(R.string.all_txt_off));
+                        mTxtDenWC.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenWC.setText(getString(R.string.all_txt_error));
+                    mTxtDenWC.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Binh NL
             if (jsonObject.has(AppConfig.binh_nl)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.binh_nl);
-                    if (value == 0) {
-                        mTxtBinhNL.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.binh_nl);
+                    if (isOn) {
                         mTxtBinhNL.setText(getString(R.string.all_txt_on));
+                        mTxtBinhNL.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtBinhNL.setText(getString(R.string.all_txt_error));
+                        mTxtBinhNL.setText(getString(R.string.all_txt_off));
+                        mTxtBinhNL.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtBinhNL.setText(getString(R.string.all_txt_error));
+                    mTxtBinhNL.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den Cua Ngach
             if (jsonObject.has(AppConfig.den_cua_ngach)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_cua_ngach);
-                    if (value == 0) {
-                        mTxtDenCuaNgach.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_cua_ngach);
+                    if (isOn) {
                         mTxtDenCuaNgach.setText(getString(R.string.all_txt_on));
+                        mTxtDenCuaNgach.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenCuaNgach.setText(getString(R.string.all_txt_error));
+                        mTxtDenCuaNgach.setText(getString(R.string.all_txt_off));
+                        mTxtDenCuaNgach.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenCuaNgach.setText(getString(R.string.all_txt_error));
+                    mTxtDenCuaNgach.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den 1 bep
             if (jsonObject.has(AppConfig.den_bep_1)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_bep_1);
-                    if (value == 0) {
-                        mTxtDenbep1.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_bep_1);
+                    if (isOn) {
                         mTxtDenbep1.setText(getString(R.string.all_txt_on));
+                        mTxtDenbep1.setTextColor(getResources().getColor(R.color.colorOn));
+
                     } else {
-                        mTxtDenbep1.setText(getString(R.string.all_txt_error));
+                        mTxtDenbep1.setText(getString(R.string.all_txt_off));
+                        mTxtDenbep1.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenbep1.setText(getString(R.string.all_txt_error));
+                    mTxtDenbep1.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Den 2 bep
             if (jsonObject.has(AppConfig.den_bep_2)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.den_bep_2);
-                    if (value == 0) {
-                        mTxtDenBep2.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.den_bep_2);
+                    if (isOn) {
                         mTxtDenBep2.setText(getString(R.string.all_txt_on));
+                        mTxtDenBep2.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtDenBep2.setText(getString(R.string.all_txt_error));
+                        mTxtDenBep2.setText(getString(R.string.all_txt_off));
+                        mTxtDenBep2.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtDenBep2.setText(getString(R.string.all_txt_error));
+                    mTxtDenBep2.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Khi Loc
@@ -726,47 +747,54 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     if (value == 0 || value == 1 || value == 2) {
                         if (value == 0) {
                             mTxtKhiLoc.setText("Tắt");
+                            mTxtKhiLoc.setTextColor(getResources().getColor(R.color.colorOff));
                         } else {
                             mTxtKhiLoc.setText("Cấp " + value);
+                            mTxtKhiLoc.setTextColor(getResources().getColor(R.color.colorOn));
                         }
                     } else {
                         mTxtKhiLoc.setText(getString(R.string.all_txt_error));
+                        mTxtKhiLoc.setTextColor(getResources().getColor(R.color.colorError));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtKhiLoc.setText(getString(R.string.all_txt_error));
+                    mTxtKhiLoc.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //AT Bep
             if (jsonObject.has(AppConfig.at_bep)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.at_bep);
-                    if (value == 0) {
-                        mTxtATbep.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.at_bep);
+                    if (isOn) {
                         mTxtATbep.setText(getString(R.string.all_txt_on));
+                        mTxtATbep.setTextColor(getResources().getColor(R.color.colorOn));
                     } else {
-                        mTxtATbep.setText(getString(R.string.all_txt_error));
+                        mTxtATbep.setText(getString(R.string.all_txt_off));
+                        mTxtATbep.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtATbep.setText(getString(R.string.all_txt_error));
+                    mTxtATbep.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //AT Tong
             if (jsonObject.has(AppConfig.at_tong)) {
                 try {
-                    int value = jsonObject.getInt(AppConfig.at_tong);
-                    if (value == 0) {
-                        mTxtATtong.setText(getString(R.string.all_txt_off));
-                    } else if (value == 1) {
+                    boolean isOn = jsonObject.getBoolean(AppConfig.at_tong);
+                    if (isOn) {
                         mTxtATtong.setText(getString(R.string.all_txt_on));
+                        mTxtATtong.setTextColor(getResources().getColor(R.color.colorOn));
+
                     } else {
-                        mTxtATtong.setText(getString(R.string.all_txt_error));
+                        mTxtATtong.setText(getString(R.string.all_txt_off));
+                        mTxtATtong.setTextColor(getResources().getColor(R.color.colorOff));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     mTxtATtong.setText(getString(R.string.all_txt_error));
+                    mTxtATtong.setTextColor(getResources().getColor(R.color.colorError));
                 }
             }
             //Nhiet do va do am

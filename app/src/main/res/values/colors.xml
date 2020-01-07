@@ -10,4 +10,7 @@
     <color name="colorRed">#f44f2a</color>
     <color name="colorBtnClicked">#2e9850</color>
     <color name="colorBtnNormal">#ffdfe2ea</color>
+    <color name="colorOn">#3292cb</color>
+    <color name="colorOff">#f44f2a</color>
+    <color name="colorError">#F7953C</color>
 </resources>

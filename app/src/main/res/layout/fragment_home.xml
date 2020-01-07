@@ -64,11 +64,11 @@
                     android:id="@+id/f1d01_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d01_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d01_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -109,11 +109,11 @@
                     android:id="@+id/f1d02_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d02_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d02_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -154,11 +154,11 @@
                     android:id="@+id/f1d03_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d03_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d03_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -257,11 +257,11 @@
                     android:id="@+id/f1d05_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d05_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d05_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -302,11 +302,11 @@
                     android:id="@+id/f1d06_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d06_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d06_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -347,11 +347,11 @@
                     android:id="@+id/f1d07_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d07_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d07_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -392,11 +392,11 @@
                     android:id="@+id/f1d08_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d08_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d08_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -437,11 +437,11 @@
                     android:id="@+id/f1d09_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d09_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d09_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -482,11 +482,11 @@
                     android:id="@+id/f1d10_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d10_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d10_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -527,11 +527,12 @@
                     android:id="@+id/f1d11_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d11_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d11_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -572,11 +573,11 @@
                     android:id="@+id/f1d12_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d12_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d12_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -617,11 +618,11 @@
                     android:id="@+id/f1d13_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d13_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d13_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -662,11 +663,11 @@
                     android:id="@+id/f1d14_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d14_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d14_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -707,11 +708,11 @@
                     android:id="@+id/f1d15_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d15_btn"
-                    app:layout_constraintStart_toEndOf="@id/f1d15_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -752,11 +753,11 @@
                     android:id="@+id/f1d16_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d16_btn_on"
-                    app:layout_constraintStart_toEndOf="@id/f1d16_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -798,11 +799,11 @@
                     android:id="@+id/cd01_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/cd01_btn"
-                    app:layout_constraintStart_toEndOf="@id/cd01_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -843,11 +844,11 @@
                     android:id="@+id/cd02_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/cd02_btn"
-                    app:layout_constraintStart_toEndOf="@id/cd02_lbl"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button

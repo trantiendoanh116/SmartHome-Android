@@ -9,6 +9,7 @@
     <dimen name="home_lbl_pading_vertical">10dp</dimen>
     <dimen name="home_lbl_pading_start">16dp</dimen>
     <dimen name="home_lbl_size">16sp</dimen>
+    <dimen name="home_lbl_value_margin_end">50dp</dimen>
     <dimen name="home_txt_value_size">16sp</dimen>
     <dimen name="home_btn_height">25dp</dimen>
     <dimen name="home_btn_txt_size">12sp</dimen>

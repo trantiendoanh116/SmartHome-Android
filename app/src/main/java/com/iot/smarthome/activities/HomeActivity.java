@@ -20,9 +20,6 @@ import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
 import com.iot.smarthome.fragments.HomeFragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.net.URISyntaxException;
 
 public class HomeActivity extends AppCompatActivity {
@@ -55,13 +52,13 @@ public class HomeActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.container, new HomeFragment(mSocket));
             fragmentTransaction.commit();
 
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("init", true);
-                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("init", true);
+//                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
         }
 
