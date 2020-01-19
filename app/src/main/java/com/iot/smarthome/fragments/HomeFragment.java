@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mTxtDenCong, mTxtDenWC, mTxtBinhNL, mTxtDenCuaNgach, mTxtDenbep1, mTxtDenBep2, mTxtKhiLoc, mTxtATtong, mTxtATbep, mTxtTemp, mTxtHumi, mTxtCo, mTxtDongDienTong,
             mTxtCSTieuThu;
     private Button btnDenTranKh1, btnDenChumKh1, btnDenTranhKh1, btnOffQuatTran, btnOnQuatTran, btnDenTrangTriKh1, btnDenTranKh2, btnDenChumKh2, btnDenTranhKh2, btnDenSan,
-            btnDenCong, btnDenWC, btnBinhNL, btnDenCuaNgach, btnDenBep1, btnDenBep2, btnKhiLoc, btnATtong, btnATbep;
+            btnDenCong, btnDenWC, btnBinhNL, btnDenCuaNgach, btnDenBep1, btnDenBep2, btnOnKhiLoc, btnOffKhiLoc, btnATtong, btnATbep;
 
     private Socket mSocket;
 
@@ -105,7 +105,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnDenBep2 = getView().findViewById(R.id.f1d15_btn);
 
         mTxtKhiLoc = getView().findViewById(R.id.f1d16_value);
-        btnKhiLoc = getView().findViewById(R.id.f1d16_btn_on);
+        btnOnKhiLoc = getView().findViewById(R.id.f1d16_btn_on);
+        btnOffKhiLoc = getView().findViewById(R.id.f1d16_btn_off);
 
         mTxtATbep = getView().findViewById(R.id.cd01_value);
         btnATbep = getView().findViewById(R.id.cd01_btn);
@@ -153,7 +154,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnDenCuaNgach.setOnClickListener(this);
         btnDenBep1.setOnClickListener(this);
         btnDenBep2.setOnClickListener(this);
-        btnKhiLoc.setOnClickListener(this);
+        btnOnKhiLoc.setOnClickListener(this);
+        btnOffKhiLoc.setOnClickListener(this);
         btnATtong.setOnClickListener(this);
         btnATbep.setOnClickListener(this);
 
@@ -406,14 +408,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }).start();
                     break;
                 case R.id.f1d16_btn_on:
-                    Log.d(TAG, "Button KhiLoc clicked");
-                    jsonObject.put(AppConfig.khi_loc, "change");
+                    Log.d(TAG, "Button ON KhiLoc clicked");
+                    jsonObject.put(AppConfig.khi_loc, "on");
 
-                    btnKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnClicked));
-                    btnKhiLoc.animate().setDuration(AppConfig.DELAY_CHANGE_BTN_COLOR).withEndAction(new Runnable() {
+                    btnOnKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnClicked));
+                    btnOnKhiLoc.animate().setDuration(AppConfig.DELAY_CHANGE_BTN_COLOR).withEndAction(new Runnable() {
                         @Override
                         public void run() {
-                            btnKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnNormal));
+                            btnOnKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnNormal));
+                        }
+                    }).start();
+                    break;
+                case R.id.f1d16_btn_off:
+                    Log.d(TAG, "Button OFF KhiLoc clicked");
+                    jsonObject.put(AppConfig.khi_loc, "off");
+
+                    btnOffKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnClicked));
+                    btnOffKhiLoc.animate().setDuration(AppConfig.DELAY_CHANGE_BTN_COLOR).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnOffKhiLoc.setBackgroundColor(getResources().getColor(R.color.colorBtnNormal));
                         }
                     }).start();
                     break;
@@ -744,7 +758,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (jsonObject.has(AppConfig.khi_loc)) {
                 try {
                     int value = jsonObject.getInt(AppConfig.khi_loc);
-                    if (value == 0 || value == 1 || value == 2) {
+                    if (value == 0 || value == 1 || value == 2 || value == 3) {
                         if (value == 0) {
                             mTxtKhiLoc.setText("Tắt");
                             mTxtKhiLoc.setTextColor(getResources().getColor(R.color.colorOff));

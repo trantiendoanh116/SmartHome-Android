@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.iot.smarthome"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -34,5 +34,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 
+    //Apache
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 
 }

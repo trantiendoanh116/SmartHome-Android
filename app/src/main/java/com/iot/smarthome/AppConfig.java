@@ -2,7 +2,7 @@ package com.iot.smarthome;
 
 public class AppConfig {
     public final static String URL_SERVER = "https://smart-home-hung.herokuapp.com";
-    //public final static String URL_SERVER = "http://192.168.0.103:3484";
+    //public final static String URL_SERVER = "http://192.168.1.121:3484";
     public final static String NAMESPACE_GET_DATA = "/android";
 
     public final static String EVENT_RECEIVE_DATA = "DATA";
@@ -40,4 +40,5 @@ public class AppConfig {
 
 
     public static final long DELAY_CHANGE_BTN_COLOR = 500;
+    public static final int CONNECTION_TINMEOUT = 5 * 1000;
 }

@@ -34,7 +34,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/cardview"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/text_warning">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -757,21 +757,32 @@
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d16_btn_off"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/f1d16_btn_off"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d16_btn_on"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/f1d16_btn_on"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="@dimen/home_btn_height"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:background="#ffdfe2ea"
-                    android:text="ON/OFF"
+                    android:text="ON"
                     android:textSize="@dimen/home_btn_txt_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
