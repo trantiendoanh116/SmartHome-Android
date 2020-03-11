@@ -1,6 +1,8 @@
 package com.iot.smarthome.activities;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
 import com.iot.smarthome.fragments.HomeFragment;
 import com.iot.smarthome.network.HttpConnectionClient;
+import com.iot.smarthome.service.SocketService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +36,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final String TAG = "HomeActivity";
     public static NavigationView mNavigationView;
     public static DrawerLayout mDrawerLayout;
 
@@ -49,8 +53,13 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         } else {
             setContentView(R.layout.activity_home);
+            Intent intent = new Intent(this, SocketService.class);
+            if (!isMyServiceRunning(SocketService.class)) {
+                startService(intent);
+                Log.d(TAG, "Start service");
+            }
             try {
-                mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.NAMESPACE_GET_DATA);
+                mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.SOCKET_NAMESPACE_APP);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
                 Log.d("ERROR :", e.toString());
@@ -105,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                                             try {
                                                 JSONObject jsonObject = new JSONObject();
                                                 jsonObject.put("init", true);
-                                                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+                                                //mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -132,6 +141,19 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i("isMyServiceRunning?", true + "");
+                return true;
+            }
+        }
+        Log.i("isMyServiceRunning?", false + "");
+        return false;
+    }
+
+
     public void showDialog(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(msg);
@@ -154,6 +176,5 @@ public class HomeActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 
 }

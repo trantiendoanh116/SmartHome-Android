@@ -1,11 +1,13 @@
 package com.iot.smarthome;
 
 public class AppConfig {
-    public final static String URL_SERVER = "https://smart-home-hung.herokuapp.com";
-    //public final static String URL_SERVER = "http://192.168.1.121:3484";
-    public final static String NAMESPACE_GET_DATA = "/android";
+    //public final static String URL_SERVER = "https://smart-home-hung.herokuapp.com";
+    public final static String URL_SERVER = "https://smarthome116.herokuapp.com";
+    public final static String SOCKET_NAMESPACE_APP = "/android";
+    public final static String SOCKET_NAMESPACE_SERVICE = "/android_bckg";
 
     public final static String EVENT_RECEIVE_DATA = "DATA";
+    public final static String EVENT_CHECK_CONNECT = "CHECK";
     public final static String EVENT_CONTROL = "CONTROL";
 
     public final static String den_tran_kh1 = "F1_D01";
@@ -28,15 +30,13 @@ public class AppConfig {
     public final static String at_tong = "C_D02";
     public final static String temp_humi = "C_S01";
     public final static String co = "C_S02";
-    public final static String cong_suat_va_dien_tieu_thu = "C_S03";
+    public final static String dong_dien_tong = "C_S03_POWER";
+    public final static String cong_suat_tieu_thu = "C_S03_ENERGY";
 
     public final static String KEY_TEMP = "TEMP";
     public final static String KEY_HUMI = "HUMI";
-
-    public final static String KEY_A = "A";
-    public final static String KEY_W = "W";
-    public final static String KEY_KW = "KW";
-    public final static String KEY_MW = "MW";
+    public final static String KEY_AMPE = "AMP";
+    public final static String KEY_VOLTAGE = "VOL";
 
 
     public static final long DELAY_CHANGE_BTN_COLOR = 500;

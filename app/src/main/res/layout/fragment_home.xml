@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/home"
         app:navigationIcon="@drawable/ic_menu"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="Nhà thông minh"
@@ -909,7 +910,7 @@
                     android:layout_marginStart="@dimen/home_lbl_pading_start"
                     android:layout_marginTop="@dimen/home_lbl_pading_vertical"
                     android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Nhiệt độ và độ ẩm"
+                    android:text="Nhiệt độ và độ ẩm Bếp"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/home_lbl_size"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -994,7 +995,27 @@
 
 
                 <TextView
-                    android:id="@+id/cs03_dd_value"
+                    android:id="@+id/cs03_vol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="V"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/line"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/cs03_amp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/cs03_amp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
