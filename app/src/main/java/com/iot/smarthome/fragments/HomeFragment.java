@@ -1,6 +1,7 @@
 package com.iot.smarthome.fragments;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -22,10 +24,15 @@ import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
 import com.iot.smarthome.activities.HomeActivity;
 import com.iot.smarthome.common.PrefManager;
+import com.iot.smarthome.network.HttpConnectionClient;
 import com.iot.smarthome.utils.AppUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private final String TAG = HomeFragment.class.getSimpleName();
@@ -155,8 +162,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setupViewATTong();
         setupTempHumi();
         setupKhoiCo();
-        setupViewDongDienTong();
-        setupViewCongSuatTieuThu();
+        setupViewDongDienVaLuongDienTieuThu();
     }
 
     private void setOnListener() {
@@ -178,19 +184,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_refresh) {
-                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                    progressDialog.setMessage("Vui lòng chờ...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-                    progressDialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setupUIValueDevice();
-                            progressDialog.dismiss();
-                        }
-                    }, 2000);
+                    pingServerAndRefresh();
+//                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
+//                    progressDialog.setMessage("Vui lòng chờ...");
+//                    progressDialog.setCancelable(false);
+//                    progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+//                    progressDialog.show();
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                JSONObject jsonObject = new JSONObject();
+//                                jsonObject.put("init", true);
+//                                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                            progressDialog.dismiss();
+//                        }
+//                    }, 2000);
 
                 }
                 return false;
@@ -217,6 +230,67 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnATtong.setOnClickListener(this);
         btnATbep.setOnClickListener(this);
 
+    }
+
+    private void pingServerAndRefresh() {
+        final ProgressDialog spinner = new ProgressDialog(getContext());
+        spinner.setMessage("Vui lòng chờ...");
+        spinner.show();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final JSONObject objectStatus = new JSONObject();
+                try {
+                    final HttpURLConnection response = HttpConnectionClient.get(AppUtils.getAddressServer(getContext()) + "/ping", new HashMap<String, String>());
+                    if (Objects.requireNonNull(response).getResponseCode() == 200) {
+                        objectStatus.put("status", 200);
+
+                    }
+                } catch (Exception e) {
+                    Log.e("HomeActivity", e.getMessage());
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            spinner.dismiss();
+                            if (objectStatus.has("status") && objectStatus.getInt("status") == 200) {
+                                showDialog("Ứng dụng đã kết nối với server, dữ liệu đang được cập nhật!");
+                                JSONObject jsonObject = new JSONObject();
+                                jsonObject.put("init", true);
+                                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+                                mTextWaring.setVisibility(View.GONE);
+                            } else {
+                                showDialog("Chưa kết nối server");
+                                mTextWaring.setVisibility(View.VISIBLE);
+                            }
+                        } catch (Exception e) {
+                            Log.e("HomeActivity", e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+            }
+        });
+        t.start();
+    }
+
+
+    public void showDialog(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(msg);
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void setOnListenerSocket() {
@@ -754,32 +828,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 setupKhoiCo();
             }
             //Dong Dien Tong
-            if (jsonObject.has(AppConfig.dong_dien_tong)) {
+            if (jsonObject.has(AppConfig.do_dien_tong)) {
                 try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.dong_dien_tong);
+                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.do_dien_tong);
                     double amp = jsonObject1.getDouble(AppConfig.KEY_AMPE);
                     double vol = jsonObject1.getDouble(AppConfig.KEY_VOLTAGE);
+                    double energy = jsonObject1.getDouble(AppConfig.KEY_ENERGY);
                     prefManager.putDouble(PrefManager.DONGDIEN_AMPE, amp);
                     prefManager.putDouble(PrefManager.DONGDIEN_VOL, vol);
+                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, energy);
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     prefManager.putDouble(PrefManager.DONGDIEN_AMPE, -1);
                     prefManager.putDouble(PrefManager.DONGDIEN_VOL, -1);
-                }
-                setupViewDongDienTong();
-            }
-
-            if (jsonObject.has(AppConfig.cong_suat_tieu_thu)) {
-                try {
-                    double value = jsonObject.getDouble(AppConfig.cong_suat_tieu_thu);
-                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, value);
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
                     prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
                 }
-                setupViewCongSuatTieuThu();
+                setupViewDongDienVaLuongDienTieuThu();
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -833,7 +898,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setupViewQuatTran() {
-        int value = prefManager.getInt(PrefManager.DEN_TRAN_KH1, -1);
+        int value = prefManager.getInt(PrefManager.QUAT_TRAN, -1);
         if (value == 0 || value == 1 || value == 2 || value == 3) {
             if (value == 0) {
                 mTxtQuatTran.setText("Tắt");
@@ -1090,38 +1155,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void setupViewDongDienTong() {
+    private void setupViewDongDienVaLuongDienTieuThu() {
         double ampe = prefManager.getDouble(PrefManager.DONGDIEN_AMPE, -1);
         double vol = prefManager.getDouble(PrefManager.DONGDIEN_VOL, -1);
+        double energy = prefManager.getDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
         if (ampe != -1 && vol != -1) {
             mTxtVol.setText(String.format("%sV", AppUtils.doubleToStringFormat(vol)));
             mTxtAmp.setText(String.format("%sA", AppUtils.doubleToStringFormat(ampe)));
+
+
+            if (energy >= 1000) {
+                int mw = (int) energy / 1000;
+                int kw = (int) energy % 1000;
+                mTxtCSTieuThu.setText(String.format("%sMW - %sKW", mw, kw));
+            } else {
+                mTxtCSTieuThu.setText(String.format("%sKW", (int) energy));
+            }
+            mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorTextPrimary));
             mTxtVol.setTextColor(getResources().getColor(R.color.colorTextPrimary));
             mTxtAmp.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+
         } else {
             mTxtVol.setText(getString(R.string.all_txt_error));
             mTxtVol.setTextColor(getResources().getColor(R.color.colorError));
             mTxtAmp.setText(getString(R.string.all_txt_error));
             mTxtAmp.setTextColor(getResources().getColor(R.color.colorError));
-        }
-
-    }
-
-    private void setupViewCongSuatTieuThu() {
-        double value = prefManager.getDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
-        if (value != -1) {
-            if (value >= 1000) {
-                int mw = (int) value / 1000;
-                int kw = (int) value % 1000;
-                mTxtCSTieuThu.setText(String.format("%sMW - %sKW", mw, kw));
-            } else {
-                mTxtCSTieuThu.setText(String.format("%sKW", (int) value));
-            }
-            mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        } else {
             mTxtCSTieuThu.setText(getString(R.string.all_txt_error));
             mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorError));
         }
+
     }
 
 }

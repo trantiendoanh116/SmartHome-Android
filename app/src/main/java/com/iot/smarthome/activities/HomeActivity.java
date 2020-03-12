@@ -1,16 +1,13 @@
 package com.iot.smarthome.activities;
 
 import android.app.ActivityManager;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,16 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
 import com.iot.smarthome.fragments.HomeFragment;
-import com.iot.smarthome.network.HttpConnectionClient;
 import com.iot.smarthome.service.SocketService;
+import com.iot.smarthome.utils.AppUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -59,12 +53,21 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d(TAG, "Start service");
             }
             try {
-                mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.SOCKET_NAMESPACE_APP);
+                mSocket = IO.socket(AppUtils.getAddressServer(this) + AppConfig.SOCKET_NAMESPACE_APP);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
                 Log.d("ERROR :", e.toString());
             }
             mSocket.connect();
+            if (getIntent().getBooleanExtra("EXTRA_INIT_DATA", false)) {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("init", true);
+                    mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             //show sreen home
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
@@ -84,55 +87,6 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     return true;
-                } else if (id == R.id.action_refresh) {
-                    final ProgressDialog spinner = new ProgressDialog(HomeActivity.this);
-                    spinner.setMessage("Đang kiểm tra...");
-                    spinner.show();
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            final JSONObject objectStatus = new JSONObject();
-                            try {
-
-                                final HttpURLConnection response = HttpConnectionClient.get(AppConfig.URL_SERVER + "/ping", new HashMap<String, String>());
-                                if (Objects.requireNonNull(response).getResponseCode() == 200) {
-                                    objectStatus.put("status", 200);
-
-                                }
-                            } catch (Exception e) {
-                                Log.e("HomeActivity", e.getMessage());
-                                e.printStackTrace();
-                            }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        spinner.dismiss();
-
-                                        if (objectStatus.has("status") && objectStatus.getInt("status") == 200) {
-                                            showDialog("Đã kết nối với server");
-                                            try {
-                                                JSONObject jsonObject = new JSONObject();
-                                                jsonObject.put("init", true);
-                                                //mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                            mDrawerLayout.closeDrawers();
-                                        } else {
-                                            showDialog("Chưa kết nối server");
-                                        }
-                                    } catch (Exception e) {
-                                        Log.e("HomeActivity", e.getMessage());
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-
-                        }
-                    });
-                    t.start();
                 }
                 return false;
             }
@@ -153,20 +107,6 @@ public class HomeActivity extends AppCompatActivity {
         return false;
     }
 
-
-    public void showDialog(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(msg);
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-            }
-        });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
 
     @Override
     public void onBackPressed() {

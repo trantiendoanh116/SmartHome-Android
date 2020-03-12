@@ -10,6 +10,7 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.common.PrefManager;
+import com.iot.smarthome.utils.AppUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,8 @@ public class SocketService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
         try {
-            mSocket = IO.socket(AppConfig.URL_SERVER + AppConfig.SOCKET_NAMESPACE_SERVICE);
+
+            mSocket = IO.socket(AppUtils.getAddressServer(getApplicationContext()) + AppConfig.SOCKET_NAMESPACE_APP);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             Log.d("ERROR :", e.toString());
@@ -291,29 +293,23 @@ public class SocketService extends Service {
                 }
             }
             //Dong dien tong (Ampe & vol)
-            if (jsonObject.has(AppConfig.dong_dien_tong)) {
+            if (jsonObject.has(AppConfig.do_dien_tong)) {
                 try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.dong_dien_tong);
+                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.do_dien_tong);
                     double amp = jsonObject1.getDouble(AppConfig.KEY_AMPE);
                     double vol = jsonObject1.getDouble(AppConfig.KEY_VOLTAGE);
+                    double energy = jsonObject1.getDouble(AppConfig.KEY_ENERGY);
                     prefManager.putDouble(PrefManager.DONGDIEN_AMPE, amp);
                     prefManager.putDouble(PrefManager.DONGDIEN_VOL, vol);
+                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, energy);
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     prefManager.putDouble(PrefManager.DONGDIEN_AMPE, -1);
                     prefManager.putDouble(PrefManager.DONGDIEN_VOL, -1);
-                }
-            }
-
-            if (jsonObject.has(AppConfig.cong_suat_tieu_thu)) {
-                try {
-                    double value = jsonObject.getDouble(AppConfig.cong_suat_tieu_thu);
-                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, value);
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
                     prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
                 }
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -322,16 +318,16 @@ public class SocketService extends Service {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(AppConfig.EVENT_RECEIVE_DATA, onReceived);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Log.d(TAG, "onDestroy");
+//        mSocket.disconnect();
+//        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+//        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+//        mSocket.off(AppConfig.EVENT_RECEIVE_DATA, onReceived);
+//    }
 
     @Override
     public IBinder onBind(Intent intent) {

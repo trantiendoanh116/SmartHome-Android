@@ -36,5 +36,6 @@
     <string name="settings_msg_confirm_logout">Bạn chắc chắn muốn đăng xuất?</string>
     <string name="nav_header_title">Phạm Hùng</string>
     <string name="all_loading">Loading</string>
+    <string name="settings_lbl_address_server">Server</string>
 
 </resources>

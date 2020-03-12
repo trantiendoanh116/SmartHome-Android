@@ -12,8 +12,7 @@ public class PrefManager {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
-    public static String APP_CONNECT_SERVER = "IS_APP_CONNECT";
-    public static String ESP8266_CONNECT_SERVER = "IS_ESP8266_CONNECT";
+    public static String SERVER_ADDRESS = "SERVER_ADDRESS";
     public static String DEN_TRAN_KH1 = "F1_D01";
     public static String DEN_CHUM_KH1 = "F1_D02";
     public static String DEN_TRANH_KH1 = "F1_D03";
