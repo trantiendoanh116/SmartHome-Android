@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView mTextWaring;
     private PrefManager prefManager;
     private TextView mTxtDenTranKh1, mTxtDenChumKh1, mTxtDentranhKh1, mTxtQuatTran, mTxtDenTrangTriKh1, mTxtDenTranKh2, mTxtDenChumKh2, mTxtDentranhKh2, mTxtDenSan,
-            mTxtDenCong, mTxtDenWC, mTxtBinhNL, mTxtDenCuaNgach, mTxtDenbep1, mTxtDenBep2, mTxtKhiLoc, mTxtATtong, mTxtATbep, mTxtTemp, mTxtHumi, mTxtCo, mTxtVol, mTxtAmp,
+            mTxtDenCong, mTxtDenWC, mTxtBinhNL, mTxtDenCuaNgach, mTxtDenbep1, mTxtDenBep2, mTxtKhiLoc, mTxtATtong, mTxtATbep, mTxtTemp, mTxtHumi, mTxtCo, mTxtAmpVol,
             mTxtCSTieuThu;
     private Button btnDenTranKh1, btnDenChumKh1, btnDenTranhKh1, btnOffQuatTran, btnOnQuatTran, btnDenTrangTriKh1, btnDenTranKh2, btnDenChumKh2, btnDenTranhKh2, btnDenSan,
             btnDenCong, btnDenWC, btnBinhNL, btnDenCuaNgach, btnDenBep1, btnDenBep2, btnOnKhiLoc, btnOffKhiLoc, btnATtong, btnATbep;
@@ -134,8 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mTxtTemp = getView().findViewById(R.id.cs01_temp_value);
         mTxtHumi = getView().findViewById(R.id.cs01_humi_value);
         mTxtCo = getView().findViewById(R.id.cs02_value);
-        mTxtVol = getView().findViewById(R.id.cs03_vol);
-        mTxtAmp = getView().findViewById(R.id.cs03_amp);
+        mTxtAmpVol = getView().findViewById(R.id.cs03_amp_vol);
         mTxtCSTieuThu = getView().findViewById(R.id.cs03_cs_value);
 
         setupUIValueDevice();
@@ -665,12 +664,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             //Den Tranh tri KH1
             if (jsonObject.has(AppConfig.den_trangtri_kh1)) {
                 try {
+                    Log.d(TAG, "den trang tri" + jsonObject.getInt(AppConfig.den_trangtri_kh1));
                     prefManager.putInt(PrefManager.DEN_TRANGTRI_KH1, jsonObject.getInt(AppConfig.den_trangtri_kh1));
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
                     prefManager.putInt(PrefManager.DEN_TRANGTRI_KH1, -1);
                 }
-                setupViewDenTranhKH1();
+                setupViewDenTrangTriKH1();
             }
             //Den Tran KH2
             if (jsonObject.has(AppConfig.den_tran_kh2)) {
@@ -1128,14 +1128,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         double temp = prefManager.getDouble(PrefManager.TEMP, -1);
         double humi = prefManager.getDouble(PrefManager.HUMI, -1);
         if (temp != -1) {
-            mTxtTemp.setText(String.format("%s °C", AppUtils.doubleToStringFormat(temp)));
+            mTxtTemp.setText(String.format("%s °C", AppUtils.doubleToStringFormat(temp, 1)));
             mTxtTemp.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         } else {
             mTxtTemp.setText(getString(R.string.all_txt_error));
             mTxtTemp.setTextColor(getResources().getColor(R.color.colorError));
         }
         if (humi != -1) {
-            mTxtHumi.setText(String.format("%s %%", AppUtils.doubleToStringFormat(humi)));
+            mTxtHumi.setText(String.format("%s %%", AppUtils.doubleToStringFormat(humi, 1)));
             mTxtHumi.setTextColor(getResources().getColor(R.color.colorTextPrimary));
         } else {
             mTxtHumi.setText(getString(R.string.all_txt_error));
@@ -1159,10 +1159,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         double ampe = prefManager.getDouble(PrefManager.DONGDIEN_AMPE, -1);
         double vol = prefManager.getDouble(PrefManager.DONGDIEN_VOL, -1);
         double energy = prefManager.getDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
-        if (ampe != -1 && vol != -1) {
-            mTxtVol.setText(String.format("%sV", AppUtils.doubleToStringFormat(vol)));
-            mTxtAmp.setText(String.format("%sA", AppUtils.doubleToStringFormat(ampe)));
-
+        if (ampe != -1 && vol != -1 && energy != -1) {
+            mTxtAmpVol.setText(String.format("%sA/%sV", AppUtils.doubleToStringFormat(ampe, 1), AppUtils.doubleToStringFormat(vol, 1)));
 
             if (energy >= 1000) {
                 int mw = (int) energy / 1000;
@@ -1172,14 +1170,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 mTxtCSTieuThu.setText(String.format("%sKW", (int) energy));
             }
             mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-            mTxtVol.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-            mTxtAmp.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+            mTxtAmpVol.setTextColor(getResources().getColor(R.color.colorTextPrimary));
 
         } else {
-            mTxtVol.setText(getString(R.string.all_txt_error));
-            mTxtVol.setTextColor(getResources().getColor(R.color.colorError));
-            mTxtAmp.setText(getString(R.string.all_txt_error));
-            mTxtAmp.setTextColor(getResources().getColor(R.color.colorError));
+            mTxtAmpVol.setText(getString(R.string.all_txt_error));
+            mTxtAmpVol.setTextColor(getResources().getColor(R.color.colorError));
             mTxtCSTieuThu.setText(getString(R.string.all_txt_error));
             mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorError));
         }

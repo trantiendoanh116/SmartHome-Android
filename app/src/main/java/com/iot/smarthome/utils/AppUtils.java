@@ -15,11 +15,11 @@ public class AppUtils {
         return prefManager.getString(PrefManager.SERVER_ADDRESS, AppConfig.URL_SERVER_DEFAULT);
     }
 
-    public static String doubleToStringFormat(double number) {
+    public static String doubleToStringFormat(double number, int numAfterDot) {
         try {
             NumberFormat numberFormat = NumberFormat.getInstance();
-            numberFormat.setMaximumFractionDigits(2);
-            numberFormat.setMinimumFractionDigits(2);
+            numberFormat.setMaximumFractionDigits(numAfterDot);
+            numberFormat.setMinimumFractionDigits(numAfterDot);
             numberFormat.setRoundingMode(RoundingMode.HALF_UP);
             return numberFormat.format(number);
         } catch (Exception e) {
