@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/cardview"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_warning">
 
         <LinearLayout
@@ -874,174 +874,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include layout="@layout/layout_line_horizontal" />
-
         </LinearLayout>
     </ScrollView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#ff000000" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/home_lbl_pading_start"
-                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
-                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Nhiệt độ và độ ẩm Bếp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="@dimen/home_lbl_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/cs01_temp_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="°C"
-                    android:textSize="@dimen/home_txt_value_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/cs01_humi_value"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/cs01_humi_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="%"
-                    android:textSize="@dimen/home_txt_value_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <include layout="@layout/layout_line_horizontal" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
-                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Khói bếp(CO)"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="@dimen/home_lbl_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/cs02_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:textSize="@dimen/home_txt_value_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <include layout="@layout/layout_line_horizontal" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
-                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Dòng điện tổng"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="@dimen/home_lbl_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/cs03_amp_vol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="A/V"
-                    android:textSize="@dimen/home_txt_value_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <include layout="@layout/layout_line_horizontal" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
-                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Công suất điện tiêu thụ"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="@dimen/home_lbl_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/cs03_cs_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="W.KW.MW"
-                    android:textSize="@dimen/home_txt_value_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

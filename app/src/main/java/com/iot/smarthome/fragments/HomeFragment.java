@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
@@ -40,8 +42,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView mTextWaring;
     private PrefManager prefManager;
     private TextView mTxtDenTranKh1, mTxtDenChumKh1, mTxtDentranhKh1, mTxtQuatTran, mTxtDenTrangTriKh1, mTxtDenTranKh2, mTxtDenChumKh2, mTxtDentranhKh2, mTxtDenSan,
-            mTxtDenCong, mTxtDenWC, mTxtBinhNL, mTxtDenCuaNgach, mTxtDenbep1, mTxtDenBep2, mTxtKhiLoc, mTxtATtong, mTxtATbep, mTxtTemp, mTxtHumi, mTxtCo, mTxtAmpVol,
-            mTxtCSTieuThu;
+            mTxtDenCong, mTxtDenWC, mTxtBinhNL, mTxtDenCuaNgach, mTxtDenbep1, mTxtDenBep2, mTxtKhiLoc, mTxtATtong, mTxtATbep;
     private Button btnDenTranKh1, btnDenChumKh1, btnDenTranhKh1, btnOffQuatTran, btnOnQuatTran, btnDenTrangTriKh1, btnDenTranKh2, btnDenChumKh2, btnDenTranhKh2, btnDenSan,
             btnDenCong, btnDenWC, btnBinhNL, btnDenCuaNgach, btnDenBep1, btnDenBep2, btnOnKhiLoc, btnOffKhiLoc, btnATtong, btnATbep;
 
@@ -131,12 +132,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnATtong = getView().findViewById(R.id.cd02_btn);
 
 
-        mTxtTemp = getView().findViewById(R.id.cs01_temp_value);
-        mTxtHumi = getView().findViewById(R.id.cs01_humi_value);
-        mTxtCo = getView().findViewById(R.id.cs02_value);
-        mTxtAmpVol = getView().findViewById(R.id.cs03_amp_vol);
-        mTxtCSTieuThu = getView().findViewById(R.id.cs03_cs_value);
-
         setupUIValueDevice();
     }
 
@@ -159,9 +154,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setupViewKhiLoc();
         setupViewATBep();
         setupViewATTong();
-        setupTempHumi();
-        setupKhoiCo();
-        setupViewDongDienVaLuongDienTieuThu();
     }
 
     private void setOnListener() {
@@ -204,6 +196,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                        }
 //                    }, 2000);
 
+                } else {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.container, new SensorFragment(mSocket));
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
                 return false;
             }
@@ -802,49 +800,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
                 setupViewATTong();
             }
-            //Nhiet do va do am
-            if (jsonObject.has(AppConfig.temp_humi)) {
-                try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.temp_humi);
-                    double temp = jsonObject1.getDouble(AppConfig.KEY_TEMP);
-                    double humi = jsonObject1.getDouble(AppConfig.KEY_HUMI);
-                    prefManager.putDouble(PrefManager.TEMP, temp);
-                    prefManager.putDouble(PrefManager.HUMI, humi);
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putDouble(PrefManager.TEMP, -1);
-                    prefManager.putDouble(PrefManager.HUMI, -1);
-                }
-                setupTempHumi();
-            }
-            //Khi CO bep
-            if (jsonObject.has(AppConfig.co)) {
-                try {
-                    prefManager.putDouble(PrefManager.KHOI_CO, jsonObject.getDouble(AppConfig.co));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putDouble(PrefManager.KHOI_CO, -1);
-                }
-                setupKhoiCo();
-            }
-            //Dong Dien Tong
-            if (jsonObject.has(AppConfig.do_dien_tong)) {
-                try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.do_dien_tong);
-                    double amp = jsonObject1.getDouble(AppConfig.KEY_AMPE);
-                    double vol = jsonObject1.getDouble(AppConfig.KEY_VOLTAGE);
-                    double energy = jsonObject1.getDouble(AppConfig.KEY_ENERGY);
-                    prefManager.putDouble(PrefManager.DONGDIEN_AMPE, amp);
-                    prefManager.putDouble(PrefManager.DONGDIEN_VOL, vol);
-                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, energy);
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putDouble(PrefManager.DONGDIEN_AMPE, -1);
-                    prefManager.putDouble(PrefManager.DONGDIEN_VOL, -1);
-                    prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
-                }
-                setupViewDongDienVaLuongDienTieuThu();
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1120,63 +1075,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } else {
             mTxtATtong.setText(getString(R.string.all_txt_error));
             mTxtATtong.setTextColor(getResources().getColor(R.color.colorError));
-        }
-
-    }
-
-    private void setupTempHumi() {
-        double temp = prefManager.getDouble(PrefManager.TEMP, -1);
-        double humi = prefManager.getDouble(PrefManager.HUMI, -1);
-        if (temp != -1) {
-            mTxtTemp.setText(String.format("%s °C", AppUtils.doubleToStringFormat(temp, 1)));
-            mTxtTemp.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        } else {
-            mTxtTemp.setText(getString(R.string.all_txt_error));
-            mTxtTemp.setTextColor(getResources().getColor(R.color.colorError));
-        }
-        if (humi != -1) {
-            mTxtHumi.setText(String.format("%s %%", AppUtils.doubleToStringFormat(humi, 1)));
-            mTxtHumi.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        } else {
-            mTxtHumi.setText(getString(R.string.all_txt_error));
-            mTxtHumi.setTextColor(getResources().getColor(R.color.colorError));
-        }
-
-    }
-
-    private void setupKhoiCo() {
-        double value = prefManager.getDouble(PrefManager.KHOI_CO, -1);
-        if (value != -1) {
-            mTxtCo.setText(String.format("%s/400max", (int) value));
-            mTxtCo.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-        } else {
-            mTxtCo.setText(getString(R.string.all_txt_error));
-            mTxtCo.setTextColor(getResources().getColor(R.color.colorError));
-        }
-    }
-
-    private void setupViewDongDienVaLuongDienTieuThu() {
-        double ampe = prefManager.getDouble(PrefManager.DONGDIEN_AMPE, -1);
-        double vol = prefManager.getDouble(PrefManager.DONGDIEN_VOL, -1);
-        double energy = prefManager.getDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
-        if (ampe != -1 && vol != -1 && energy != -1) {
-            mTxtAmpVol.setText(String.format("%sA/%sV", AppUtils.doubleToStringFormat(ampe, 1), AppUtils.doubleToStringFormat(vol, 1)));
-
-            if (energy >= 1000) {
-                int mw = (int) energy / 1000;
-                int kw = (int) energy % 1000;
-                mTxtCSTieuThu.setText(String.format("%sMW - %sKW", mw, kw));
-            } else {
-                mTxtCSTieuThu.setText(String.format("%sKW", (int) energy));
-            }
-            mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-            mTxtAmpVol.setTextColor(getResources().getColor(R.color.colorTextPrimary));
-
-        } else {
-            mTxtAmpVol.setText(getString(R.string.all_txt_error));
-            mTxtAmpVol.setTextColor(getResources().getColor(R.color.colorError));
-            mTxtCSTieuThu.setText(getString(R.string.all_txt_error));
-            mTxtCSTieuThu.setTextColor(getResources().getColor(R.color.colorError));
         }
 
     }
