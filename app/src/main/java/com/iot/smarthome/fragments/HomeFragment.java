@@ -52,8 +52,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         this.mSocket = socket;
     }
 
-    public HomeFragment() {
-    }
 
     @Nullable
     @Override

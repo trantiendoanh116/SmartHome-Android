@@ -38,10 +38,10 @@ public class SocketService extends Service {
         Log.d(TAG, "onStartCommand");
         try {
 
-            mSocket = IO.socket(AppUtils.getAddressServer(getApplicationContext()) + AppConfig.SOCKET_NAMESPACE_APP);
+            mSocket = IO.socket(AppUtils.getAddressServer(getApplicationContext()) + AppConfig.SOCKET_NAMESPACE_BACKGROUND);
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            Log.d("ERROR :", e.toString());
+            Log.e("ERROR :", e.toString());
         }
         initSocket();
 
@@ -83,7 +83,7 @@ public class SocketService extends Service {
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d(TAG, "error " + args[0].toString());
+            Log.e(TAG, "error " + args[0].toString());
         }
     };
 
