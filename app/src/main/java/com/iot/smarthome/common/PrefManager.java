@@ -34,6 +34,7 @@ public class PrefManager {
     public static String TEMP = "C_S01_TEMP";
     public static String HUMI = "C_S01_HUMI";
     public static String KHOI_CO = "C_S02";
+    public static String DUST = "C_S04";
     public static String DONGDIEN_AMPE = "C_S03_AMPE";
     public static String DONGDIEN_VOL = "C_S03_VOL";
     public static String CONG_SUAT_TIEU_THU = "C_S03_ENERGY";

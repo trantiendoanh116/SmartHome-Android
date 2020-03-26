@@ -32,6 +32,7 @@ public class AppConfig {
     public final static String at_tong = "C_D02";
     public final static String temp_humi = "C_S01";
     public final static String co = "C_S02";
+    public final static String dust = "C_S02";
     public final static String do_dien_tong = "C_S03";
 
     public final static String KEY_TEMP = "TEMP";

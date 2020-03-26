@@ -28,7 +28,8 @@ public class SensorFragment extends Fragment {
     private final String TAG = SensorFragment.class.getSimpleName();
     private Toolbar mToolbar;
     private PrefManager prefManager;
-    private TextView mTxtTemp, mTxtHumi, mTxtCo, mTxtAmpVol, mTxtCSTieuThu;
+    private TextView mTxtTemp, mTxtHumi, mTxtCo, mTxtAmpVol, mTxtCSTieuThu, mTxtDustValue;
+    private View mColorLevelDust;
     private Socket mSocket;
 
     public SensorFragment(Socket socket) {
@@ -56,6 +57,8 @@ public class SensorFragment extends Fragment {
         mTxtTemp = getView().findViewById(R.id.cs01_temp_value);
         mTxtHumi = getView().findViewById(R.id.cs01_humi_value);
         mTxtCo = getView().findViewById(R.id.cs02_value);
+        mTxtDustValue = getView().findViewById(R.id.cs04_value);
+        mColorLevelDust = getView().findViewWithTag(R.id.cs04_color_level);
         mTxtAmpVol = getView().findViewById(R.id.cs03_amp_vol);
         mTxtCSTieuThu = getView().findViewById(R.id.cs03_cs_value);
     }
@@ -64,6 +67,7 @@ public class SensorFragment extends Fragment {
         setupTempHumi();
         setupKhoiCo();
         setupViewDongDienVaLuongDienTieuThu();
+        setupViewDust();
     }
 
     private void setOnListener() {
@@ -137,6 +141,16 @@ public class SensorFragment extends Fragment {
             }
             setupKhoiCo();
         }
+        //Nong do bui min
+        if (jsonObject.has(AppConfig.dust)) {
+            try {
+                prefManager.putDouble(PrefManager.DUST, jsonObject.getDouble(AppConfig.dust));
+            } catch (JSONException e) {
+                Log.e(TAG, e.getMessage());
+                prefManager.putDouble(PrefManager.DUST, -1);
+            }
+            setupViewDust();
+        }
         //Dong Dien Tong
         if (jsonObject.has(AppConfig.do_dien_tong)) {
             try {
@@ -185,6 +199,16 @@ public class SensorFragment extends Fragment {
         } else {
             mTxtCo.setText(getString(R.string.all_txt_error));
             mTxtCo.setTextColor(getResources().getColor(R.color.colorError));
+        }
+    }
+    private void setupViewDust() {
+        double value = prefManager.getDouble(PrefManager.DUST, -1);
+        if (value != -1) {
+            mTxtDustValue.setText(String.format("%s µg/m3", (int) value));
+            mTxtDustValue.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+        } else {
+            mTxtDustValue.setText(getString(R.string.all_txt_error));
+            mTxtDustValue.setTextColor(getResources().getColor(R.color.colorError));
         }
     }
 

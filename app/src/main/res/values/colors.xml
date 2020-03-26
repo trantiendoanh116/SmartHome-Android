@@ -13,4 +13,11 @@
     <color name="colorOn">#3292cb</color>
     <color name="colorOff">#f44f2a</color>
     <color name="colorError">#F7953C</color>
+
+    <color name="colorDustGood">#3df40f</color>
+    <color name="colorDustNormal">#fff200</color>
+    <color name="colorDustLittlePollution">#ffc90e</color>
+    <color name="colorDustPollution">#ed1c24</color>
+    <color name="colorDustVeryPollution">#a349a4</color>
+    <color name="colorDustDangerousPollution">#880015</color>
 </resources>

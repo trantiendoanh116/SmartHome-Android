@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +15,6 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="Cảm biến"
         app:titleTextColor="#FFFF" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,11 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#ff000000" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -75,9 +68,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <include layout="@layout/layout_line_horizontal" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -114,6 +105,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:id="@+id/layout_color_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustGood" />
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustNormal" />
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustLittlePollution" />
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustPollution" />
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustVeryPollution" />
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@color/colorDustDangerousPollution" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="Bụi mịn"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="@id/layout_color_level"
+                    app:layout_constraintEnd_toEndOf="@id/layout_color_level"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_color_level" />
+
+
+                <TextView
+                    android:id="@+id/cs04_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="43 µg/m3"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/cs04_color_level"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/cs04_color_level"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="@color/colorDustGood"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -140,7 +207,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <include layout="@layout/layout_line_horizontal" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -174,6 +240,12 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <include layout="@layout/layout_line_horizontal" />
+
+
         </LinearLayout>
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
