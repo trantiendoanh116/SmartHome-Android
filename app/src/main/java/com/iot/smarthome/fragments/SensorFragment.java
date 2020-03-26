@@ -58,7 +58,7 @@ public class SensorFragment extends Fragment {
         mTxtHumi = getView().findViewById(R.id.cs01_humi_value);
         mTxtCo = getView().findViewById(R.id.cs02_value);
         mTxtDustValue = getView().findViewById(R.id.cs04_value);
-        mColorLevelDust = getView().findViewWithTag(R.id.cs04_color_level);
+        mColorLevelDust = getView().findViewById(R.id.cs04_color_level);
         mTxtAmpVol = getView().findViewById(R.id.cs03_amp_vol);
         mTxtCSTieuThu = getView().findViewById(R.id.cs03_cs_value);
     }
@@ -201,14 +201,29 @@ public class SensorFragment extends Fragment {
             mTxtCo.setTextColor(getResources().getColor(R.color.colorError));
         }
     }
+
     private void setupViewDust() {
         double value = prefManager.getDouble(PrefManager.DUST, -1);
         if (value != -1) {
             mTxtDustValue.setText(String.format("%s µg/m3", (int) value));
             mTxtDustValue.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+            if (value <= 50) {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustGood));
+            } else if (value <= 100) {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustNormal));
+            } else if (value <= 150) {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustLittlePollution));
+            } else if (value <= 200) {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustPollution));
+            } else if (value <= 300) {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustVeryPollution));
+            } else {
+                mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustDangerousPollution));
+            }
         } else {
             mTxtDustValue.setText(getString(R.string.all_txt_error));
             mTxtDustValue.setTextColor(getResources().getColor(R.color.colorError));
+            mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustGood));
         }
     }
 

@@ -292,6 +292,15 @@ public class SocketService extends Service {
                     prefManager.putDouble(PrefManager.KHOI_CO, -1);
                 }
             }
+            //Nong do bui min
+            if (jsonObject.has(AppConfig.dust)) {
+                try {
+                    prefManager.putDouble(PrefManager.DUST, jsonObject.getDouble(AppConfig.dust));
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                    prefManager.putDouble(PrefManager.DUST, -1);
+                }
+            }
             //Dong dien tong (Ampe & vol)
             if (jsonObject.has(AppConfig.do_dien_tong)) {
                 try {
