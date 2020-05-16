@@ -107,7 +107,7 @@ public class HttpConnectionClient {
 
     }
 
-    // HTTP POST request
+    // HTTP DELETE request
     @SafeVarargs
     public static HttpURLConnection delete(String uri, Map<String, String> pamrams, String body, Map<String, String>... headers) {
         try {

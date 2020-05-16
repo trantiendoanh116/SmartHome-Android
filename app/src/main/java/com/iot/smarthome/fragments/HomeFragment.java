@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -20,20 +21,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
 import com.iot.smarthome.activities.HomeActivity;
 import com.iot.smarthome.common.PrefManager;
+import com.iot.smarthome.firebase.DocSnippets;
+import com.iot.smarthome.firebase.FirestoreCallBack;
 import com.iot.smarthome.network.HttpConnectionClient;
 import com.iot.smarthome.utils.AppUtils;
+import com.iot.smarthome.utils.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -46,12 +52,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button btnDenTranKh1, btnDenChumKh1, btnDenTranhKh1, btnOffQuatTran, btnOnQuatTran, btnDenTrangTriKh1, btnDenTranKh2, btnDenChumKh2, btnDenTranhKh2, btnDenSan,
             btnDenCong, btnDenWC, btnBinhNL, btnDenCuaNgach, btnDenBep1, btnDenBep2, btnOnKhiLoc, btnOffKhiLoc, btnATtong, btnATbep;
 
-    private Socket mSocket;
+    private DocSnippets docSnippets;
+    ListenerRegistration registration;
 
-    public HomeFragment(Socket socket) {
-        this.mSocket = socket;
+    public HomeFragment() {
     }
-
 
     @Nullable
     @Override
@@ -63,11 +68,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         prefManager = new PrefManager(getContext());
-        mSocket.on(AppConfig.EVENT_RECEIVE_DATA, onReceived);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        docSnippets = new DocSnippets(db);
         initViews();
         setOnListener();
-        setOnListenerSocket();
+        listenEventFirestore();
     }
+
+
+    private void listenEventFirestore() {
+        registration = docSnippets.listenToDocument(new FirestoreCallBack() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Log.d(TAG, "Update ui device");
+                setupUIValueDevice();
+            }
+
+            @Override
+            public void onError(String err) {
+                Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void initViews() {
         mToolbar = getView().findViewById(R.id.toolbar);
@@ -133,7 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setupUIValueDevice();
     }
 
-    public void setupUIValueDevice() {
+    private void setupUIValueDevice() {
         setupViewDenTranKH1();
         setupViewDenChumKH1();
         setupViewDenTranhKH1();
@@ -172,35 +195,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_refresh) {
-                    pingServerAndRefresh();
-//                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
-//                    progressDialog.setMessage("Vui lòng chờ...");
-//                    progressDialog.setCancelable(false);
-//                    progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-//                    progressDialog.show();
-//                    Handler handler = new Handler();
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                JSONObject jsonObject = new JSONObject();
-//                                jsonObject.put("init", true);
-//                                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            progressDialog.dismiss();
-//                        }
-//                    }, 2000);
-
-                } else {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.container, new SensorFragment(mSocket));
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.container, new SensorFragment());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                }, 350);
                 return false;
             }
         });
@@ -245,95 +250,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.e("HomeActivity", e.getMessage());
                     e.printStackTrace();
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            spinner.dismiss();
-                            if (objectStatus.has("status") && objectStatus.getInt("status") == 200) {
-                                showDialog("Ứng dụng đã kết nối với server, dữ liệu đang được cập nhật!");
-                                JSONObject jsonObject = new JSONObject();
-                                jsonObject.put("init", true);
-                                mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
-                                mTextWaring.setVisibility(View.GONE);
-                            } else {
-                                showDialog("Chưa kết nối server");
-                                mTextWaring.setVisibility(View.VISIBLE);
-                            }
-                        } catch (Exception e) {
-                            Log.e("HomeActivity", e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
 
             }
         });
         t.start();
     }
 
-
-    public void showDialog(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(msg);
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-            }
-        });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    private void setOnListenerSocket() {
-        if (mSocket.connected()) {
-            mTextWaring.setVisibility(View.GONE);
-
-        } else {
-            mTextWaring.setVisibility(View.VISIBLE);
-
-        }
-        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d(TAG, "Connected to socket server");
-                            mTextWaring.setVisibility(View.GONE);
-
-                        }
-                    });
-                }
-
-            }
-
-        });
-        mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d(TAG, "Disconnected to socket server");
-                            mTextWaring.setVisibility(View.VISIBLE);
-                        }
-                    });
-
-
-                }
-            }
-
-        });
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -584,224 +506,54 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 default:
                     break;
             }
+            sendToServer(jsonObject);
             Log.d(TAG, "Send to server: " + jsonObject.toString());
-            mSocket.emit(AppConfig.EVENT_CONTROL, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private Emitter.Listener onReceived = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject data = (JSONObject) args[0];
-                            Log.d(TAG, "" + data.toString());
-                            processData(data);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+    private void sendToServer(JSONObject jsonObject) {
+        if (NetworkUtil.isConnectedToNetwork(getContext())) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final HttpURLConnection response = HttpConnectionClient.post(AppUtils.getAddressServer(getContext()) + "/device/control", new HashMap<String, String>(), jsonObject.toString(), new HashMap<String, String>());
+                    try {
+                        if (response != null && response.getResponseCode() == 201) {
+                            Log.d(TAG, "Success");
+                        } else if (response != null && response.getResponseCode() == 400) {
+                            showDialog("ESP8266 đã ngắt kết nối");
+                        } else {
+                            showDialog("Server đã ngắt kết nối");
                         }
+                    } catch (IOException e) {
+                        showDialog(e.getMessage());
+                    }
+                }
+            }).start();
+        } else {
+            showDialog("Không có kết nối mạng. Vui lòng kiểm tra và thử lại!");
+        }
+    }
 
+    public void showDialog(String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(msg);
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
 
                     }
                 });
+                final AlertDialog alert = builder.create();
+                alert.show();
             }
-
-        }
-    };
-
-    private void processData(JSONObject jsonObject) {
-        try {
-            //Den Tran KH1
-            if (jsonObject.has(AppConfig.den_tran_kh1)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_TRAN_KH1, jsonObject.getInt(AppConfig.den_tran_kh1));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_TRAN_KH1, -1);
-                }
-                setupViewDenTranKH1();
-            }
-            //Den Chum KH1
-            if (jsonObject.has(AppConfig.den_chum_kh1)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_CHUM_KH1, jsonObject.getInt(AppConfig.den_chum_kh1));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_CHUM_KH1, -1);
-                }
-                setupViewDenChumKH1();
-            }
-            //Den Tranh KH1
-            if (jsonObject.has(AppConfig.den_tranh_kh1)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_TRANH_KH1, jsonObject.getInt(AppConfig.den_tranh_kh1));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_TRANH_KH1, -1);
-                }
-                setupViewDenTranhKH1();
-            }
-            //Quat Tran
-            if (jsonObject.has(AppConfig.quat_tran)) {
-                try {
-                    prefManager.putInt(PrefManager.QUAT_TRAN, jsonObject.getInt(AppConfig.quat_tran));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.QUAT_TRAN, -1);
-                }
-                setupViewQuatTran();
-            }
-            //Den Tranh tri KH1
-            if (jsonObject.has(AppConfig.den_trangtri_kh1)) {
-                try {
-                    Log.d(TAG, "den trang tri" + jsonObject.getInt(AppConfig.den_trangtri_kh1));
-                    prefManager.putInt(PrefManager.DEN_TRANGTRI_KH1, jsonObject.getInt(AppConfig.den_trangtri_kh1));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_TRANGTRI_KH1, -1);
-                }
-                setupViewDenTrangTriKH1();
-            }
-            //Den Tran KH2
-            if (jsonObject.has(AppConfig.den_tran_kh2)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_TRAN_KH2, jsonObject.getInt(AppConfig.den_tran_kh2));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_TRAN_KH2, -1);
-                }
-                setupViewDenTranKH2();
-            }
-            //Den Chum KH2
-            if (jsonObject.has(AppConfig.den_chum_kh2)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_CHUM_KH2, jsonObject.getInt(AppConfig.den_chum_kh2));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_CHUM_KH2, -1);
-                }
-                setupViewDenChumKH2();
-            }
-            //Den Tranh KH2
-            if (jsonObject.has(AppConfig.den_tranh_kh2)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_TRANH_KH2, jsonObject.getInt(AppConfig.den_tranh_kh2));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_TRANH_KH2, -1);
-                }
-                setupViewDenTranhKH2();
-            }
-            //Den San
-            if (jsonObject.has(AppConfig.den_san)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_SAN, jsonObject.getInt(AppConfig.den_san));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_SAN, -1);
-                }
-                setupViewDenSan();
-            }
-            //Den Cong
-            if (jsonObject.has(AppConfig.den_cong)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_CONG, jsonObject.getInt(AppConfig.den_cong));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_CONG, -1);
-                }
-                setupViewDenCong();
-            }
-            //Den WC
-            if (jsonObject.has(AppConfig.den_wc)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_WC, jsonObject.getInt(AppConfig.den_wc));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_WC, -1);
-                }
-                setupViewDenWC();
-            }
-            //Binh NL
-            if (jsonObject.has(AppConfig.binh_nl)) {
-                try {
-                    prefManager.putInt(PrefManager.BINH_NL, jsonObject.getInt(AppConfig.binh_nl));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.BINH_NL, -1);
-                }
-                setupViewBinhNL();
-            }
-            //Den Cua Ngach
-            if (jsonObject.has(AppConfig.den_cua_ngach)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_CUA_NGACH, jsonObject.getInt(AppConfig.den_cua_ngach));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_CUA_NGACH, -1);
-                }
-                setupViewDenCuaNgach();
-            }
-            //Den 1 bep
-            if (jsonObject.has(AppConfig.den_bep_1)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_BEP_1, jsonObject.getInt(AppConfig.den_bep_1));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_BEP_1, -1);
-                }
-                setupViewDenBep1();
-            }
-            //Den 2 bep
-            if (jsonObject.has(AppConfig.den_bep_2)) {
-                try {
-                    prefManager.putInt(PrefManager.DEN_BEP_2, jsonObject.getInt(AppConfig.den_bep_2));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.DEN_BEP_2, -1);
-                }
-                setupViewDenBep2();
-            }
-            //Khi Loc
-            if (jsonObject.has(AppConfig.khi_loc)) {
-                try {
-                    prefManager.putInt(PrefManager.KHI_LOC, jsonObject.getInt(AppConfig.khi_loc));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.KHI_LOC, -1);
-                }
-                setupViewKhiLoc();
-            }
-            //AT Bep
-            if (jsonObject.has(AppConfig.at_bep)) {
-                try {
-                    prefManager.putInt(PrefManager.AT_BEP, jsonObject.getInt(AppConfig.at_bep));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.AT_BEP, -1);
-                }
-                setupViewATBep();
-            }
-            //AT Tong
-            if (jsonObject.has(AppConfig.at_tong)) {
-                try {
-                    prefManager.putInt(PrefManager.AT_TONG, jsonObject.getInt(AppConfig.at_tong));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                    prefManager.putInt(PrefManager.AT_TONG, -1);
-                }
-                setupViewATTong();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
 
     }
 

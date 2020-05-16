@@ -6,7 +6,8 @@ public class AppConfig {
     public final static String[] SERVER_ADDRESS = {"https://smart-home-hung.herokuapp.com", "https://smarthome116.herokuapp.com"};
     public final static String[] SERVER_NAME = {"Mr.Hung's server", "Truong's server"};
     public final static String SOCKET_NAMESPACE_APP = "/android";
-    public final static String SOCKET_NAMESPACE_BACKGROUND = "/android_bckg";
+    public final static String FIRESTORE_CONLLECTION_PATH = "smarthome-116";
+
 
     public final static String EVENT_RECEIVE_DATA = "DATA";
     public final static String EVENT_CHECK_CONNECT = "CHECK";

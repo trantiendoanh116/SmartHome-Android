@@ -14,22 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <receiver
-            android:name=".receiver.SocketReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="SocketReceiver" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".service.SocketIOMyService"
-            android:enabled="true"
-            android:exported="false" />
-        <service
-            android:name=".service.SocketService"
-            android:exported="false" />
 
         <activity
             android:name=".activities.HomeActivity"

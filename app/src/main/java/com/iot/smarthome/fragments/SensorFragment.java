@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -14,15 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
-import com.iot.smarthome.AppConfig;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.iot.smarthome.R;
 import com.iot.smarthome.common.PrefManager;
+import com.iot.smarthome.firebase.DocSnippets;
+import com.iot.smarthome.firebase.FirestoreCallBack;
 import com.iot.smarthome.utils.AppUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Map;
 
 public class SensorFragment extends Fragment {
     private final String TAG = SensorFragment.class.getSimpleName();
@@ -30,10 +30,10 @@ public class SensorFragment extends Fragment {
     private PrefManager prefManager;
     private TextView mTxtTemp, mTxtHumi, mTxtCo, mTxtAmpVol, mTxtCSTieuThu, mTxtDustValue;
     private View mColorLevelDust;
-    private Socket mSocket;
 
-    public SensorFragment(Socket socket) {
-        this.mSocket = socket;
+    private DocSnippets docSnippets;
+
+    public SensorFragment() {
     }
 
     @Nullable
@@ -46,10 +46,28 @@ public class SensorFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         prefManager = new PrefManager(getContext());
-        mSocket.on(AppConfig.EVENT_RECEIVE_DATA, onReceived);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        docSnippets = new DocSnippets(db);
         initViews();
         setOnListener();
         setupUIValueDevice();
+        listenEventFirestore();
+    }
+
+    private void listenEventFirestore() {
+
+        docSnippets.listenToDocument(new FirestoreCallBack() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Log.d(TAG, "Update ui sensor");
+                setupUIValueDevice();
+            }
+
+            @Override
+            public void onError(String err) {
+                Toast.makeText(getContext(), err, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void initViews() {
@@ -80,7 +98,7 @@ public class SensorFragment extends Fragment {
                     public void run() {
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.replace(R.id.container, new HomeFragment(mSocket));
+                        transaction.replace(R.id.container, new HomeFragment());
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
@@ -90,86 +108,62 @@ public class SensorFragment extends Fragment {
 
     }
 
-
-    private Emitter.Listener onReceived = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject data = (JSONObject) args[0];
-                            Log.d(TAG, "" + data.toString());
-                            processData(data);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                });
-            }
-
-        }
-    };
-
-    private void processData(JSONObject jsonObject) {
-        //Nhiet do va do am
-        if (jsonObject.has(AppConfig.temp_humi)) {
-            try {
-                JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.temp_humi);
-                double temp = jsonObject1.getDouble(AppConfig.KEY_TEMP);
-                double humi = jsonObject1.getDouble(AppConfig.KEY_HUMI);
-                prefManager.putDouble(PrefManager.TEMP, temp);
-                prefManager.putDouble(PrefManager.HUMI, humi);
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
-                prefManager.putDouble(PrefManager.TEMP, -1);
-                prefManager.putDouble(PrefManager.HUMI, -1);
-            }
-            setupTempHumi();
-        }
-        //Khi CO bep
-        if (jsonObject.has(AppConfig.co)) {
-            try {
-                prefManager.putDouble(PrefManager.KHOI_CO, jsonObject.getDouble(AppConfig.co));
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
-                prefManager.putDouble(PrefManager.KHOI_CO, -1);
-            }
-            setupKhoiCo();
-        }
-        //Nong do bui min
-        if (jsonObject.has(AppConfig.dust)) {
-            try {
-                prefManager.putDouble(PrefManager.DUST, jsonObject.getDouble(AppConfig.dust));
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
-                prefManager.putDouble(PrefManager.DUST, -1);
-            }
-            setupViewDust();
-        }
-        //Dong Dien Tong
-        if (jsonObject.has(AppConfig.do_dien_tong)) {
-            try {
-                JSONObject jsonObject1 = jsonObject.getJSONObject(AppConfig.do_dien_tong);
-                double amp = jsonObject1.getDouble(AppConfig.KEY_AMPE);
-                double vol = jsonObject1.getDouble(AppConfig.KEY_VOLTAGE);
-                double energy = jsonObject1.getDouble(AppConfig.KEY_ENERGY);
-                prefManager.putDouble(PrefManager.DONGDIEN_AMPE, amp);
-                prefManager.putDouble(PrefManager.DONGDIEN_VOL, vol);
-                prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, energy);
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
-                prefManager.putDouble(PrefManager.DONGDIEN_AMPE, -1);
-                prefManager.putDouble(PrefManager.DONGDIEN_VOL, -1);
-                prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
-            }
-            setupViewDongDienVaLuongDienTieuThu();
-        }
-    }
+//
+//    private void processData(Map<String, Object> data) {
+//        //Nhiet do va do am
+//        if (data.containsKey(AppConfig.temp_humi)) {
+//            try {
+//                HashMap<String, Double> hashMap = (HashMap<String, Double>) data.get(AppConfig.temp_humi);
+//                double temp = new Double(hashMap.get(AppConfig.KEY_TEMP).toString());
+//                double humi = new Double(hashMap.get(AppConfig.KEY_HUMI).toString());
+//                prefManager.putDouble(PrefManager.TEMP, temp);
+//                prefManager.putDouble(PrefManager.HUMI, humi);
+//            } catch (Exception e) {
+//                Log.e(TAG, "Nhiet do vaf do am: " + e.getMessage());
+//                prefManager.putDouble(PrefManager.TEMP, -1);
+//                prefManager.putDouble(PrefManager.HUMI, -1);
+//            }
+//            setupTempHumi();
+//        }
+//        //Khi CO bep
+//        if (data.containsKey(AppConfig.co)) {
+//            try {
+//                prefManager.putDouble(PrefManager.KHOI_CO, new Double(data.get(AppConfig.co).toString()));
+//            } catch (Exception e) {
+//                Log.e(TAG, "Co: " + e.getMessage());
+//                prefManager.putDouble(PrefManager.KHOI_CO, -1);
+//            }
+//            setupKhoiCo();
+//        }
+//        //Nong do bui min
+//        if (data.containsKey(AppConfig.dust)) {
+//            try {
+//                prefManager.putDouble(PrefManager.DUST, new Double(data.get(AppConfig.dust).toString()));
+//            } catch (Exception e) {
+//                Log.e(TAG, "Bui: " + e.getMessage());
+//                prefManager.putDouble(PrefManager.DUST, -1);
+//            }
+//            setupViewDust();
+//        }
+//        //Dong Dien Tong
+//        if (data.containsKey(AppConfig.do_dien_tong)) {
+//            try {
+//                HashMap<String, Object> hashMap = (HashMap<String, Object>) data.get(AppConfig.do_dien_tong);
+//                double amp = new Double(hashMap.get(AppConfig.KEY_AMPE).toString());
+//                double vol = new Double(hashMap.get(AppConfig.KEY_VOLTAGE).toString());
+//                double energy = new Double(hashMap.get(AppConfig.KEY_ENERGY).toString());
+//                prefManager.putDouble(PrefManager.DONGDIEN_AMPE, amp);
+//                prefManager.putDouble(PrefManager.DONGDIEN_VOL, vol);
+//                prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, energy);
+//            } catch (Exception e) {
+//                Log.e(TAG, "Dien: " + e.getMessage());
+//                prefManager.putDouble(PrefManager.DONGDIEN_AMPE, -1);
+//                prefManager.putDouble(PrefManager.DONGDIEN_VOL, -1);
+//                prefManager.putDouble(PrefManager.CONG_SUAT_TIEU_THU, -1);
+//            }
+//            setupViewDongDienVaLuongDienTieuThu();
+//        }
+//    }
 
     private void setupTempHumi() {
         double temp = prefManager.getDouble(PrefManager.TEMP, -1);
