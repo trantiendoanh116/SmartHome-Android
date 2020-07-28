@@ -2,104 +2,68 @@ package com.iot.smarthome.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.iot.smarthome.AppConfig;
 import com.iot.smarthome.R;
-import com.iot.smarthome.common.PrefManager;
-import com.iot.smarthome.firebase.DocSnippets;
-import com.iot.smarthome.firebase.FirestoreCallBack;
-import com.iot.smarthome.fragments.HomeFragment;
+import com.iot.smarthome.adapters.MyAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = "HomeActivity";
-    public static NavigationView mNavigationView;
-    public static DrawerLayout mDrawerLayout;
-    public PrefManager prefManager;
+public class MainActivity extends AppCompatActivity {
+    private final String TAG = "MainActivity";
+    private ViewPager viewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        prefManager = new PrefManager(this);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
-            setContentView(R.layout.activity_home);
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocSnippets docSnippets = new DocSnippets(db);
-            docSnippets.listenToDocument(new FirestoreCallBack() {
+            setContentView(R.layout.activity_main);
+            TabLayout tabLayout = findViewById(R.id.tabLayout);
+            viewPager = findViewById(R.id.viewPager);
+
+            tabLayout.addTab(tabLayout.newTab().setText("Thiết bị"));
+            tabLayout.addTab(tabLayout.newTab().setText("Cảm biến"));
+            tabLayout.addTab(tabLayout.newTab().setText("Tự động hóa"));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            final MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
-                public void onSuccess(Map<String, Object> result) {
-                    Log.d(TAG, "Current data: " + result);
-                    processData(result);
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
                 }
 
                 @Override
-                public void onError(String err) {
-                    Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
                 }
             });
-            //show sreen home
-            FragmentManager mFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.container, new HomeFragment());
-            fragmentTransaction.commit();
-
-        }
-
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        mNavigationView = findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                if (id == R.id.action_settings) {
-                    Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
-
+/*
     private void processData(Map<String, Object> data) {
+        PrefManager prefManager = new PrefManager(this);
         try {
             //Den Tran KH1
-            if (data.containsKey(AppConfig.den_tran_kh1)) {
+            if (data.containsKey(AppConfig.DEN_TRAN_KH1_ID)) {
                 try {
-                    prefManager.putLong(PrefManager.DEN_TRAN_KH1, (int) (long) data.get(AppConfig.den_tran_kh1));
+                    prefManager.putLong(PrefManager.DEN_TRAN_KH1, (int) (long) data.get(AppConfig.DEN_TRAN_KH1_ID));
                 } catch (Exception e) {
                     Log.e(TAG, "Den KH1: " + e.getMessage());
                     prefManager.putLong(PrefManager.DEN_TRAN_KH1, -1);
@@ -313,4 +277,5 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+ */
 }

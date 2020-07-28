@@ -6,36 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/home"
-        app:navigationIcon="@drawable/ic_menu"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="Nhà thông minh"
-        app:titleTextColor="#FFFF" />
-
-
-    <TextView
-        android:id="@+id/text_warning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/main_msg_connect_server_warning"
-        android:textColor="@color/colorRed"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_warning">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -197,6 +172,18 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/f1d04_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto"
+                    android:textColor="@color/colorOn"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d04_value"
+                    app:layout_constraintStart_toEndOf="@id/f1d04_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/f1d04_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -204,7 +191,7 @@
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/f1d04_btn_off"
-                    app:layout_constraintStart_toEndOf="@id/f1d04_lbl"
+                    app:layout_constraintStart_toEndOf="@id/f1d04_state"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
@@ -418,7 +405,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="5dp"
+                tools:layout_editor_absoluteY="3dp">
 
                 <TextView
                     android:id="@+id/f1d09_lbl"
@@ -743,7 +732,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/home_lbl_pading_vertical"
                     android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
-                    android:text="Khí lọc"
+                    android:text="Cấp khí tươi"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/home_lbl_size"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -751,15 +740,28 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/f1d16_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto"
+                    android:textColor="@color/colorOn"
+                    android:textSize="@dimen/home_txt_value_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/f1d16_value"
+                    app:layout_constraintStart_toEndOf="@id/f1d16_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/f1d16_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/home_lbl_value_margin_end"
                     android:text="@string/all_loading"
                     android:textSize="@dimen/home_txt_value_size"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/f1d16_state"
                     app:layout_constraintEnd_toStartOf="@id/f1d16_btn_off"
                     app:layout_constraintTop_toTopOf="parent" />
+
 
                 <Button
                     android:id="@+id/f1d16_btn_off"
@@ -877,6 +879,80 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/garage_lbl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/home_lbl_pading_vertical"
+                    android:layout_marginBottom="@dimen/home_lbl_pading_vertical"
+                    android:text="Garage"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/home_lbl_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_gara_up"
+                    android:layout_width="38dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:src="@drawable/ic_triangle_up"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_gara_pause"
+                    app:layout_constraintStart_toEndOf="@+id/garage_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_gara_pause"
+                    android:layout_width="38dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:src="@drawable/ic_pause"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_gara_on_off"
+                    app:layout_constraintStart_toEndOf="@+id/garage_lbl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_gara_down"
+                    android:layout_width="38dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:src="@drawable/ic_triangle_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_gara_on_off"
+                    app:layout_constraintStart_toEndOf="@+id/btn_gara_pause"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_gara_on_off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_btn_height"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="#ffdfe2ea"
+                    android:text="ON/OFF"
+                    android:textSize="@dimen/home_btn_txt_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/layout_line_horizontal" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
         </LinearLayout>
     </ScrollView>
 
