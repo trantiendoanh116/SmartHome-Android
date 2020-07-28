@@ -6,7 +6,7 @@ public class AppConfig {
     public final static String[] SERVER_NAME = {"Mr.Hung's server", "Truong's server", "Server Windowns"};
 
     public final static String FIRESTORE_COLLECTION_DEVICE = "devices";
-    public final static String FIRESTORE_COLLECTION_SENSOR = "sensor";
+    public final static String FIRESTORE_COLLECTION_SENSOR = "sensors";
 
 
     public final static String DEN_TRAN_KH1_ID = "F1_D01";

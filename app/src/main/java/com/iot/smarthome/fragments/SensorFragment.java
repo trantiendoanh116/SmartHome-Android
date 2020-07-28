@@ -1,6 +1,7 @@
 package com.iot.smarthome.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +70,8 @@ public class SensorFragment extends Fragment {
         docSnippets.listenValueSensor(sensorID, new FirestoreCallBack() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                double temp = (result.get(AppConfig.KEY_TEMP) instanceof Double) ? (double) result.get(AppConfig.KEY_TEMP) : -1;
-                double humi  = (result.get(AppConfig.KEY_HUMI) instanceof Double)? (double)  result.get(AppConfig.KEY_HUMI) : -1;
+                double temp = AppUtils.getValueSensor(result, AppConfig.KEY_TEMP);
+                double humi  = AppUtils.getValueSensor(result, AppConfig.KEY_HUMI);
                 if (temp != -1) {
                     mTxtTemp.setText(String.format("%s °C", AppUtils.doubleToStringFormat(temp, 1)));
                     mTxtTemp.setTextColor(getResources().getColor(R.color.colorTextPrimary));
@@ -102,9 +103,9 @@ public class SensorFragment extends Fragment {
         docSnippets.listenValueSensor(sensorID, new FirestoreCallBack() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                long value = (result.get(AppConfig.KEY_VALUE) instanceof Long) ? (long) result.get(AppConfig.KEY_VALUE) : -1;
+                double value = AppUtils.getValueSensor(result,  AppConfig.KEY_VALUE);
                 if (value != -1) {
-                    mTxtCo.setText(String.format("%s ppm",  value));
+                    mTxtCo.setText(String.format("%s ppm",  AppUtils.doubleToStringFormat(value, 0)));
                     mTxtCo.setTextColor(getResources().getColor(R.color.colorTextPrimary));
                 } else {
                     mTxtCo.setText(getString(R.string.all_txt_error));
@@ -127,9 +128,9 @@ public class SensorFragment extends Fragment {
         docSnippets.listenValueSensor(sensorID, new FirestoreCallBack() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                long value = (result.get(AppConfig.KEY_VALUE) instanceof Long) ? (long) result.get(AppConfig.KEY_VALUE) : -1;
+                double value = AppUtils.getValueSensor(result,  AppConfig.KEY_VALUE);
                 if (value != -1) {
-                    mTxtDustValue.setText((String.format("%s",  value)));
+                    mTxtDustValue.setText(AppUtils.doubleToStringFormat(value, 0));
                     mTxtDustValue.setTextColor(getResources().getColor(R.color.colorTextPrimary));
                     if (value <= 50) {
                         mColorLevelDust.setBackgroundColor(getResources().getColor(R.color.colorDustGood));
@@ -167,9 +168,9 @@ public class SensorFragment extends Fragment {
         docSnippets.listenValueSensor(sensorID, new FirestoreCallBack() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                double ampe = (result.get(AppConfig.KEY_AMPE) instanceof Double) ? (double) result.get(AppConfig.KEY_AMPE) : -1;
-                double vol  = (result.get(AppConfig.KEY_VOLTAGE) instanceof Double)? (double)  result.get(AppConfig.KEY_VOLTAGE) : -1;
-                long energy  = (result.get(AppConfig.KEY_ENERGY) instanceof Long)? (long)  result.get(AppConfig.KEY_ENERGY) : -1;
+                double ampe = AppUtils.getValueSensor(result, AppConfig.KEY_AMPE);
+                double vol  =  AppUtils.getValueSensor(result, AppConfig.KEY_VOLTAGE);
+                double energy  =  AppUtils.getValueSensor(result, AppConfig.KEY_ENERGY);
                 if (ampe != -1 && vol != -1 && energy != -1) {
                     mTxtAmpVol.setText(String.format("%sA/%sV", AppUtils.doubleToStringFormat(ampe, 1), AppUtils.doubleToStringFormat(vol, 1)));
                     if (energy >= 1000) {
@@ -192,6 +193,7 @@ public class SensorFragment extends Fragment {
 
             @Override
             public void onError(String err) {
+                Log.e(TAG, err);
                 mTxtAmpVol.setText(getString(R.string.all_txt_error));
                 mTxtAmpVol.setTextColor(getResources().getColor(R.color.colorError));
                 mTxtCSTieuThu.setText(getString(R.string.all_txt_error));
